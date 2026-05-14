@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liga-Kampus Multi-Sport Storyboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="storyboardStyle.css">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">LIGA-KAMPUS</div>
+        <p class="sub">University Multi-Sport System · UiTM palette</p>
+
+        <nav>
+            <ul>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#matches">Matches</a></li>
+                <li><a href="#competitions">Competition management</a></li>
+                <li><a href="#teams">Teams &amp; coaches</a></li>
+                <li><a href="#players">Players</a></li>
+                <li><a href="#analytics">League standings</a></li>
+                <li><a href="#admin">Admin Panel</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+        </header>
+
+        <h1 class="page-title">Website Storyboard</h1>
+        <p class="description">Liga-Kampus multi-sport university management: live events, squads by sport and team, and
+            admin tools — styled with navy, purple, gold, and white inspired by UiTM branding.</p>
+
+        <section id="dashboard" class="section">
+            <h2>Dashboard</h2>
+
+            <div class="dashboard-stack">
+
+            <div class="dashboard-toolbar card card--tinted">
+                <div class="dashboard-toolbar__row dashboard-toolbar__row--filters">
+                    <div class="dashboard-toolbar__field">
+                        <label class="dashboard-toolbar__label" for="dash-sport">Sport</label>
+                        <select id="dash-sport" aria-label="Choose sport for dashboard">
+                            <option value="football" selected>Football</option>
+                            <option value="basketball">Basketball</option>
+                            <option value="badminton">Badminton</option>
+                            <option value="volleyball">Volleyball</option>
+                            <option value="tennis">Tennis</option>
+                            <option value="futsal">Futsal</option>
+                        </select>
+                    </div>
+                    <div class="dashboard-toolbar__field">
+                        <label class="dashboard-toolbar__label" for="dash-competition">Competition</label>
+                        <select id="dash-competition" aria-label="Choose competition for fixture list">
+                            <option value="liga-premier" data-sport="football" selected>Liga Kampus — Football Premier</option>
+                            <option value="inter-faculty-futsal" data-sport="futsal">Inter-Faculty Futsal Cup</option>
+                            <option value="badminton-open" data-sport="badminton">Badminton Open</option>
+                            <option value="basketball-campus" data-sport="basketball">Basketball Campus League</option>
+                            <option value="volleyball-challenge" data-sport="volleyball">Volleyball Challenge</option>
+                            <option value="tennis-open" data-sport="tennis">Tennis Open (Campus)</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn--primary btn--sm dashboard-toolbar__cta">Schedule match</button>
+                </div>
+                <p class="hint dashboard-toolbar__hint">Sport and competition filter what you see in the fixture list and league snapshot below.</p>
+            </div>
+
+            <div class="dashboard-columns">
+                <div class="card card--accent-top card--tinted">
+                    <h3>Leagues</h3>
+                    <ul class="league-list">
+                        <li class="league-list__item">
+                            <div class="league-list__main">
+                                <strong>Liga Kampus — Football Premier</strong>
+                                <span class="badge">Football</span>
+                            </div>
+                            <div class="league-list__meta">12 teams · League + knockout · Ends 28 Jun</div>
+                            <div class="league-list__foot"><span class="league-list__phase">Knockout: R16</span><button
+                                    type="button" class="btn btn--sm btn--ghost">Open</button></div>
+                        </li>
+                        <li class="league-list__item">
+                            <div class="league-list__main">
+                                <strong>Inter-Faculty Futsal Cup</strong>
+                                <span class="badge badge--gold">Futsal</span>
+                            </div>
+                            <div class="league-list__meta">8 teams · Group + semis · Ends 12 Jul</div>
+                            <div class="league-list__foot"><span class="league-list__phase">Group stage</span><button
+                                    type="button" class="btn btn--sm btn--ghost">Open</button></div>
+                        </li>
+                        <li class="league-list__item">
+                            <div class="league-list__main">
+                                <strong>Badminton Open (Singles / Doubles)</strong>
+                                <span class="badge">Badminton</span>
+                            </div>
+                            <div class="league-list__meta">16 faculties · Swiss + bracket</div>
+                            <div class="league-list__foot"><span class="league-list__phase">QF</span><button
+                                    type="button" class="btn btn--sm btn--ghost">Open</button></div>
+                        </li>
+                        <li class="league-list__item">
+                            <div class="league-list__main">
+                                <strong>Volleyball Challenge</strong>
+                                <span class="badge">Volleyball</span>
+                            </div>
+                            <div class="league-list__meta">10 teams · Round robin</div>
+                            <div class="league-list__foot"><span class="league-list__phase">Matchday 6</span><button
+                                    type="button" class="btn btn--sm btn--ghost">Open</button></div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card card--purple card--tinted">
+                    <h3>Featured live</h3>
+                    <p>FSKM vs Engineering · Football knockout</p>
+                    <p class="live-score">2 — 1</p>
+                    <p>78′ · <span class="live-tag">LIVE</span></p>
+                    <p class="hint" style="margin-top:12px">Pin any match here; full controls stay under
+                        <strong>Matches</strong>.</p>
+                </div>
+            </div>
+
+            <div class="card large card--tinted dashboard-matches-card">
+                <h3 class="dashboard-matches-card__title" id="dash-matches-heading">Liga Kampus — Football Premier</h3>
+                <p class="hint dashboard-matches-card__intro" id="dash-matches-sub">Fixtures for this competition. Each row shows stage (e.g. League or Quarter-final) and match number.</p>
+                <ul class="dash-matches-list" id="dash-matches-list" aria-label="Competition fixtures">
+                    <li class="dash-match-card">
+                        <div class="fixture-labels" aria-label="Stage and match number">
+                            <span class="fixture-type fixture-type--knockout">Quarter-final</span>
+                            <span class="fixture-match-no">Match 1</span>
+                        </div>
+                        <div class="dash-match-card__body">
+                            <div class="matches-list__when">14 May · 20:30 · Stadium A</div>
+                            <div class="matches-list__main">
+                                <span class="matches-list__team">FSKM</span>
+                                <span class="matches-list__score"><strong>2</strong> — <strong>1</strong></span>
+                                <span class="matches-list__team">Engineering</span>
+                            </div>
+                            <div class="matches-list__meta">
+                                <span class="status-pill status-pill--live">Live</span>
+                            </div>
+                            <button type="button" class="btn btn--sm btn--ghost matches-list__open">Open</button>
+                        </div>
+                    </li>
+                    <li class="dash-match-card">
+                        <div class="fixture-labels">
+                            <span class="fixture-type fixture-type--league">League</span>
+                            <span class="fixture-match-no">Match 12</span>
+                        </div>
+                        <div class="dash-match-card__body">
+                            <div class="matches-list__when">18 May · 16:00 · Stadium B</div>
+                            <div class="matches-list__main">
+                                <span class="matches-list__team">Science</span>
+                                <span class="matches-list__score">—</span>
+                                <span class="matches-list__team">Law</span>
+                            </div>
+                            <div class="matches-list__meta">
+                                <span class="status-pill">Scheduled</span>
+                            </div>
+                            <button type="button" class="btn btn--sm btn--ghost matches-list__open">Open</button>
+                        </div>
+                    </li>
+                    <li class="dash-match-card">
+                        <div class="fixture-labels">
+                            <span class="fixture-type fixture-type--league">Group stage</span>
+                            <span class="fixture-match-no">MD 6</span>
+                        </div>
+                        <div class="dash-match-card__body">
+                            <div class="matches-list__when">17 May · 16:00 · Main court</div>
+                            <div class="matches-list__main">
+                                <span class="matches-list__team">FPA</span>
+                                <span class="matches-list__score">—</span>
+                                <span class="matches-list__team">FSSR</span>
+                            </div>
+                            <div class="matches-list__meta">
+                                <span class="status-pill">Scheduled</span>
+                            </div>
+                            <button type="button" class="btn btn--sm btn--ghost matches-list__open">Open</button>
+                        </div>
+                    </li>
+                    <li class="dash-match-card">
+                        <div class="fixture-labels">
+                            <span class="fixture-type fixture-type--knockout">Quarter-final</span>
+                            <span class="fixture-match-no">Match 2</span>
+                        </div>
+                        <div class="dash-match-card__body">
+                            <div class="matches-list__when">19 May · 19:00 · Stadium A</div>
+                            <div class="matches-list__main">
+                                <span class="matches-list__team">Business</span>
+                                <span class="matches-list__score">—</span>
+                                <span class="matches-list__team">Education</span>
+                            </div>
+                            <div class="matches-list__meta">
+                                <span class="status-pill">Scheduled</span>
+                            </div>
+                            <button type="button" class="btn btn--sm btn--ghost matches-list__open">Open</button>
+                        </div>
+                    </li>
+                    <li class="dash-match-card">
+                        <div class="fixture-labels">
+                            <span class="fixture-type fixture-type--cup">Semi-final</span>
+                            <span class="fixture-match-no">Match 19</span>
+                        </div>
+                        <div class="dash-match-card__body">
+                            <div class="matches-list__when">28 May · 21:00 · Stadium A</div>
+                            <div class="matches-list__main">
+                                <span class="matches-list__team">Winner QF1</span>
+                                <span class="matches-list__score">—</span>
+                                <span class="matches-list__team">Winner QF2</span>
+                            </div>
+                            <div class="matches-list__meta">
+                                <span class="status-pill">TBD</span>
+                            </div>
+                            <button type="button" class="btn btn--sm btn--ghost matches-list__open">Open</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card large card--tinted">
+                <h3>League table · Football Premier</h3>
+                <p class="hint" style="margin-bottom:14px">League points table for the selected competition; full fixture list is above.</p>
+                <div class="table-scroll">
+                    <table class="data-table data-table--compact league-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Team</th>
+                                <th>P</th>
+                                <th>W</th>
+                                <th>D</th>
+                                <th>L</th>
+                                <th>GF</th>
+                                <th>GA</th>
+                                <th>GD</th>
+                                <th>Pts</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="league-table__row league-table__row--top"><td>1</td><td>FSKM</td><td>8</td><td>5</td><td>2</td><td>1</td><td>16</td><td>9</td><td>+7</td><td><strong>17</strong></td></tr>
+                            <tr class="league-table__row league-table__row--top"><td>2</td><td>Engineering</td><td>8</td><td>4</td><td>1</td><td>3</td><td>12</td><td>11</td><td>+1</td><td><strong>13</strong></td></tr>
+                            <tr><td>3</td><td>Science</td><td>8</td><td>4</td><td>0</td><td>4</td><td>11</td><td>12</td><td>−1</td><td>12</td></tr>
+                            <tr><td>4</td><td>Business</td><td>8</td><td>3</td><td>2</td><td>3</td><td>10</td><td>10</td><td>0</td><td>11</td></tr>
+                            <tr><td>5</td><td>Law</td><td>8</td><td>3</td><td>1</td><td>4</td><td>9</td><td>13</td><td>−4</td><td>10</td></tr>
+                            <tr><td>6</td><td>Education</td><td>8</td><td>2</td><td>3</td><td>3</td><td>8</td><td>11</td><td>−3</td><td>9</td></tr>
+                            <tr><td>7</td><td>FPA</td><td>8</td><td>2</td><td>2</td><td>4</td><td>7</td><td>14</td><td>−7</td><td>8</td></tr>
+                            <tr><td>8</td><td>Architecture</td><td>8</td><td>1</td><td>3</td><td>4</td><td>6</td><td>15</td><td>−9</td><td>6</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            </div><!-- /.dashboard-stack -->
+        </section>
+
+        <section id="competitions" class="section management-container">
+    <div class="management-card">
+        <header class="management-header">
+            <h2>Competition management</h2>
+        </header>
+
+        <div class="table-responsive">
+            <table class="management-table">
+                <thead>
+                    <tr>
+                        <th>MATCH ID</th>
+                        <th>FIXTURE</th>
+                        <th>SCORE</th>
+                        <th>VENUE & DATE</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Match Row 1 (Completed) -->
+                    <tr>
+                        <td class="font-bold">QF · Match 1</td>
+                        <td>FSKM vs Business</td>
+                        <td class="font-bold">1 - 0</td>
+                        <td>Stadium A <br><small>14 May 20:30</small></td>
+                        <td class="action-buttons">
+                            <button type="button" class="btn-edit">Edit</button>
+                            <button type="button" class="btn-withdraw">Void</button>
+                        </td>
+                    </tr>
+
+                    <!-- Match Row 2 (Pending) -->
+                    <tr>
+                        <td class="font-bold">QF · Match 2</td>
+                        <td>Science vs Winner R16 M4</td>
+                        <td class="text-muted">—</td>
+                        <td>Stadium B <br><small>16 May 18:00</small></td>
+                        <td class="action-buttons">
+                            <button type="button" class="btn-edit">Set Score</button>
+                            <button type="button" class="btn-withdraw">Remove</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+        <section id="teams" class="section">
+            <h2>Teams &amp; coaches</h2>
+            <p class="hint section-lead">Register faculty or club teams, then attach head coach, assistant, and team manager contacts for comms and eligibility.</p>
+
+            <div class="team-admin-split">
+                <div class="card card--tinted">
+                    <h3>Add / edit team</h3>
+                    <label for="tm-sport">Sport</label>
+                    <select id="tm-sport">
+                        <option selected>Football</option>
+                        <option>Futsal</option>
+                        <option>Basketball</option>
+                        <option>Badminton</option>
+                        <option>Volleyball</option>
+                        <option>Tennis</option>
+                    </select>
+                    <label for="tm-competition">Competition</label>
+                    <select id="tm-competition">
+                        <option>Liga Kampus — Football Premier</option>
+                        <option>Inter-Faculty Futsal Cup</option>
+                        <option>Basketball Campus League</option>
+                    </select>
+                    <label for="tm-name">Team display name</label>
+                    <input id="tm-name" placeholder="e.g. FSKM">
+                    <label for="tm-home">Venue</label>
+                    <input id="tm-home" placeholder="Stadium / court">
+                    <button type="button" class="btn btn--primary" style="margin-top:12px;width:auto">Save team</button>
+                </div>
+
+                <div class="card card--tinted">
+                    <h3>Coach &amp; manager</h3>
+                    <label for="tm-head">Full name</label>
+                    <input id="tm-head" placeholder="Full name">
+                    <label for="tm-head-id">Staff ID (optional)</label>
+                    <input id="tm-head-id" placeholder="Staff ID">
+                    <label for="tm-head-email">Email</label>
+                    <input id="tm-head-email" type="email" placeholder="coach@example.edu">
+                    <label for="tm-head-phone">Phone</label>
+                    <input id="tm-head-phone" type="tel" placeholder="+60 …">
+                    <button type="button" class="btn btn--secondary" style="margin-top:12px;width:auto">Save coach</button>
+                </div>
+            </div>
+
+            <div class="card large card--tinted" style="margin-top:24px">
+                <h3>Teams in this competition</h3>
+                <div class="table-scroll">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>Head coach</th>
+                                <th>Manager</th>
+                                <th>Players</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>FSKM</td>
+                                <td>Assoc. Prof. Rahman</td>
+                                <td>Nur Izzati</td>
+                                <td>22</td>
+                                <td><span class="inline-actions"><button type="button" class="btn btn--sm btn--ghost">Edit</button><button type="button" class="btn btn--sm btn--danger">Withdraw</button></span></td>
+                            </tr>
+                            <tr>
+                                <td>Engineering</td>
+                                <td>Ir. Hafiz</td>
+                                <td>Ahmad Syafiq</td>
+                                <td>20</td>
+                                <td><span class="inline-actions"><button type="button" class="btn btn--sm btn--ghost">Edit</button><button type="button" class="btn btn--sm btn--danger">Withdraw</button></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="matches" class="section">
+            <h2>Matches</h2>
+            <p class="hint section-lead">Filter fixtures by sport and league; open a row for live controls below.</p>
+
+            <div class="card card--tinted matches-hub">
+                <div class="matches-toolbar">
+                    <div class="matches-toolbar__field">
+                        <label for="list-sport">Sport</label>
+                        <select id="list-sport" aria-label="Filter matches by sport">
+                            <option value="all">All sports</option>
+                            <option value="football" selected>Football</option>
+                            <option value="basketball">Basketball</option>
+                            <option value="badminton">Badminton</option>
+                            <option value="volleyball">Volleyball</option>
+                            <option value="futsal">Futsal</option>
+                        </select>
+                    </div>
+                    <div class="matches-toolbar__field matches-toolbar__field--grow">
+                        <label for="list-league">League / competition</label>
+                        <select id="list-league" aria-label="Filter matches by league">
+                            <option value="all">All in sport</option>
+                            <option value="liga-premier" data-sport="football" selected>Football — Liga Premier</option>
+                            <option value="futsal-cup" data-sport="futsal">Futsal Cup</option>
+                            <option value="bb-campus" data-sport="basketball">Basketball Campus League</option>
+                            <option value="bad-open" data-sport="badminton">Badminton Open</option>
+                            <option value="vb-challenge" data-sport="volleyball">Volleyball Challenge</option>
+                        </select>
+                    </div>
+                </div>
+                <ul class="matches-list" id="matches-list">
+                    <li class="matches-list__item" data-sport="football" data-league="liga-premier">
+                        <div class="matches-list__when">14 May · 20:30 · Stadium A</div>
+                        <div class="matches-list__main">
+                            <span class="matches-list__team">FSKM</span>
+                            <span class="matches-list__score"><strong>2</strong> — <strong>1</strong></span>
+                            <span class="matches-list__team">Engineering</span>
+                        </div>
+                        <div class="matches-list__meta">
+                            <span>Football · Liga Premier</span>
+                            <span class="matches-list__round">QF</span>
+                            <span class="status-pill status-pill--live">Live</span>
+                        </div>
+                        <button type="button" class="btn btn--sm btn--ghost matches-list__open">Open</button>
+                    </li>
+                    <li class="matches-list__item" data-sport="football" data-league="liga-premier">
+                        <div class="matches-list__when">18 May · 16:00 · Stadium B</div>
+                        <div class="matches-list__main">
+                            <span class="matches-list__team">Science</span>
+                            <span class="matches-list__score">—</span>
+                            <span class="matches-list__team">Law</span>
+                        </div>
+                        <div class="matches-list__meta">
+                            <span>Football · Liga Premier</span>
+                            <span class="matches-list__round">League</span>
+                            <span class="status-pill">Scheduled</span>
+                        </div>
+                        <button type="button" class="btn btn--sm btn--ghost matches-list__open">Open</button>
+                    </li>
+                    <li class="matches-list__item" data-sport="basketball" data-league="bb-campus">
+                        <div class="matches-list__when">15 May · 17:00 · Indoor 2</div>
+                        <div class="matches-list__main">
+                            <span class="matches-list__team">Business</span>
+                            <span class="matches-list__score">—</span>
+                            <span class="matches-list__team">Science</span>
+                        </div>
+                        <div class="matches-list__meta">
+                            <span>Basketball · Campus League</span>
+                            <span class="matches-list__round">League</span>
+                            <span class="status-pill">Scheduled</span>
+                        </div>
+                        <button type="button" class="btn btn--sm btn--ghost matches-list__open">Open</button>
+                    </li>
+                    <li class="matches-list__item" data-sport="badminton" data-league="bad-open">
+                        <div class="matches-list__when">15 May · 19:30 · Hall B</div>
+                        <div class="matches-list__main">
+                            <span class="matches-list__team">FSKM (S)</span>
+                            <span class="matches-list__score"><strong>2</strong> — <strong>0</strong></span>
+                            <span class="matches-list__team">Engineering (S)</span>
+                        </div>
+                        <div class="matches-list__meta">
+                            <span>Badminton · Open</span>
+                            <span class="matches-list__round">QF</span>
+                            <span class="status-pill status-pill--done">FT</span>
+                        </div>
+                        <button type="button" class="btn btn--sm btn--ghost matches-list__open">Open</button>
+                    </li>
+                    <li class="matches-list__item" data-sport="volleyball" data-league="vb-challenge">
+                        <div class="matches-list__when">16 May · 16:00 · Main court</div>
+                        <div class="matches-list__main">
+                            <span class="matches-list__team">FPA</span>
+                            <span class="matches-list__score">—</span>
+                            <span class="matches-list__team">FSSR</span>
+                        </div>
+                        <div class="matches-list__meta">
+                            <span>Volleyball · Challenge</span>
+                            <span class="matches-list__round">MD6</span>
+                            <span class="status-pill">Scheduled</span>
+                        </div>
+                        <button type="button" class="btn btn--sm btn--ghost matches-list__open">Open</button>
+                    </li>
+                    <li class="matches-list__item" data-sport="futsal" data-league="futsal-cup">
+                        <div class="matches-list__when">16 May · 21:00 · Futsal 1</div>
+                        <div class="matches-list__main">
+                            <span class="matches-list__team">Law</span>
+                            <span class="matches-list__score"><strong>4</strong> — <strong>4</strong></span>
+                            <span class="matches-list__team">Architecture</span>
+                        </div>
+                        <div class="matches-list__meta">
+                            <span>Futsal · Cup</span>
+                            <span class="matches-list__round">Group C</span>
+                            <span class="status-pill status-pill--done">FT</span>
+                        </div>
+                        <button type="button" class="btn btn--sm btn--ghost matches-list__open">Open</button>
+                    </li>
+                </ul>
+                <p class="hint matches-list-empty" id="matches-list-empty" hidden>No fixtures for this sport and league.</p>
+            </div>
+
+            <h3 class="matches-live-heading">Live match controls (storyboard)</h3>
+            <p class="hint" style="margin-bottom:14px">Same screen you use during a live game: events, bench, timeline.</p>
+
+            <div class="card large card--tinted">
+                <h3>Match event controls</h3>
+                <p class="hint" style="margin-bottom:16px">Team sports (football, futsal, basketball, volleyball):
+                    substitutions, cards, and bench. Racket sports: events only — no bench.</p>
+
+                <div class="button-group">
+                    <button type="button">Add goal</button>
+                    <button type="button">Add assist</button>
+                    <button type="button">Yellow card</button>
+                    <button type="button">Red card</button>
+                    <button type="button">Substitution</button>
+                    <button type="button" class="btn btn--gold">Player injury</button>
+                </div>
+
+                <div class="match-layout">
+                    <div class="lineup-panel">
+                        <h4>On pitch / court — FSKM</h4>
+                        <div class="player-chip">Ahmad <span>#10 · FW</span></div>
+                        <div class="player-chip">Daniel <span>#7 · MF</span></div>
+                        <div class="player-chip">Faris <span>#9 · FW</span></div>
+                        <div class="player-chip">Ikram <span>#4 · DF</span></div>
+                        <p class="hint">Storyboard: extend to full starting lineup per sport rules.</p>
+                    </div>
+                    <div class="lineup-panel lineup-panel--bench">
+                        <h4>Bench — FSKM</h4>
+                        <div class="player-chip">Hakim <span>#14</span></div>
+                        <div class="player-chip">Syafiq <span>#22</span></div>
+                        <div class="player-chip">Luqman <span>#18</span></div>
+                        <p class="hint">Drag-to-substitute or pick from bench in the live match UI.</p>
+                    </div>
+                </div>
+
+                <p class="hint hint--gold" style="margin-top:20px"><strong>Badminton / tennis:</strong> no bench — show
+                    only the two (or four for doubles) active names and match points. Injury still logged for medical
+                    and eligibility records.</p>
+
+                <h3 style="margin-top:28px">Injury log (this match)</h3>
+                <ul class="timeline">
+                    <li>34′ Injury — Daniel (ankle); assessed, continued</li>
+                </ul>
+
+                <h3 style="margin-top:24px">Event timeline</h3>
+                <ul class="timeline">
+                    <li>12′ Goal — Ahmad</li>
+                    <li>26′ Yellow card — Daniel</li>
+                    <li>40′ Substitution — Hakim on for Luqman</li>
+                    <li>77′ Goal — Faris</li>
+                </ul>
+            </div>
+
+        </section>
+
+        <section id="players" class="section">
+            <h2>Player management</h2>
+
+            <p class="hint" style="margin-bottom:16px">Browse by sport → team → players. Racket sports add
+                <strong>Singles</strong> / <strong>Doubles</strong>. Use CRUD for sports, teams, and roster rows.</p>
+
+            <div class="crud-toolbar">
+                <button type="button" class="btn btn--primary">Add sport</button>
+                <button type="button" class="btn btn--secondary">Edit sport</button>
+                <button type="button" class="btn btn--danger">Remove sport</button>
+                <button type="button" class="btn btn--gold">Add team</button>
+                <button type="button" class="btn btn--ghost">Edit team</button>
+                <button type="button" class="btn btn--ghost">Delete team</button>
+            </div>
+
+            <div class="filter-tabs" role="tablist" aria-label="Sport categories">
+                <button type="button" class="is-active">Football</button>
+                <button type="button">Basketball</button>
+                <button type="button">Volleyball</button>
+                <button type="button">Futsal</button>
+                <button type="button">Badminton</button>
+                <button type="button">Tennis</button>
+            </div>
+
+            <!-- Football example -->
+            <div class="sport-block">
+                <div class="sport-block__head">
+                    <h3>Football</h3>
+                    <div class="sport-block__actions">
+                        <button type="button" class="btn btn--ghost"
+                            style="color:#fff;border-color:rgba(255,255,255,0.35)">Sport settings</button>
+                    </div>
+                </div>
+
+                <div class="team-row">
+                    <div class="team-row__title">
+                        <strong>FSKM</strong>
+                        <div>
+                            <span class="badge">Faculty team</span>
+                            <button type="button" class="btn btn--sm btn--ghost">Edit team</button>
+                            <button type="button" class="btn btn--sm btn--primary">Add player</button>
+                        </div>
+                    </div>
+
+                    <div class="team-stats" aria-label="FSKM team statistics">
+                        <div class="team-stats__title">Team statistics · Football · Liga Premier</div>
+                        <div class="team-stats__grid">
+                            <div class="team-stats__item"><span class="team-stats__label">P</span><span
+                                    class="team-stats__value">8</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">W–D–L</span><span
+                                    class="team-stats__value">5–2–1</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">GF / GA</span><span
+                                    class="team-stats__value">16 / 9</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">GD</span><span
+                                    class="team-stats__value">+7</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">Pts</span><span
+                                    class="team-stats__value team-stats__value--accent">17</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">Team fouls</span><span
+                                    class="team-stats__value">62</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">YC / RC</span><span
+                                    class="team-stats__value">9 / 0</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">Clean sheets</span><span
+                                    class="team-stats__value">3</span></div>
+                        </div>
+                    </div>
+
+                    <table class="player-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Student ID</th>
+                                <th>#</th>
+                                <th>Position</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ahmad Zaki</td>
+                                <td>2023123456</td>
+                                <td>10</td>
+                                <td>Forward</td>
+                                <td><span class="inline-actions"><button type="button"
+                                            class="btn btn--sm btn--ghost">Edit</button><button type="button"
+                                            class="btn btn--sm btn--danger">Delete</button></span></td>
+                            </tr>
+                            <tr>
+                                <td>Daniel Haqimi</td>
+                                <td>2023987654</td>
+                                <td>7</td>
+                                <td>Midfielder</td>
+                                <td><span class="inline-actions"><button type="button"
+                                            class="btn btn--sm btn--ghost">Edit</button><button type="button"
+                                            class="btn btn--sm btn--danger">Delete</button></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="team-row">
+                    <div class="team-row__title">
+                        <strong>Engineering</strong>
+                        <div>
+                            <span class="badge">Faculty team</span>
+                            <button type="button" class="btn btn--sm btn--ghost">Edit team</button>
+                            <button type="button" class="btn btn--sm btn--primary">Add player</button>
+                        </div>
+                    </div>
+
+                    <div class="team-stats" aria-label="Engineering team statistics">
+                        <div class="team-stats__title">Team statistics · Football · Liga Premier</div>
+                        <div class="team-stats__grid">
+                            <div class="team-stats__item"><span class="team-stats__label">P</span><span
+                                    class="team-stats__value">8</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">W–D–L</span><span
+                                    class="team-stats__value">4–1–3</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">GF / GA</span><span
+                                    class="team-stats__value">12 / 11</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">GD</span><span
+                                    class="team-stats__value">+1</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">Pts</span><span
+                                    class="team-stats__value team-stats__value--accent">13</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">Team fouls</span><span
+                                    class="team-stats__value">55</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">YC / RC</span><span
+                                    class="team-stats__value">6 / 1</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">Clean sheets</span><span
+                                    class="team-stats__value">2</span></div>
+                        </div>
+                    </div>
+
+                    <table class="player-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Student ID</th>
+                                <th>#</th>
+                                <th>Position</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Faris Iqbal</td>
+                                <td>2023778899</td>
+                                <td>9</td>
+                                <td>Forward</td>
+                                <td><span class="inline-actions"><button type="button"
+                                            class="btn btn--sm btn--ghost">Edit</button><button type="button"
+                                            class="btn btn--sm btn--danger">Delete</button></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Badminton: solo vs doubles -->
+            <div class="sport-block">
+                <div class="sport-block__head">
+                    <h3>Badminton</h3>
+                    <div class="sport-block__actions">
+                        <button type="button" class="btn btn--ghost"
+                            style="color:#fff;border-color:rgba(255,255,255,0.35)">Sport settings</button>
+                    </div>
+                </div>
+
+                <div class="team-row">
+                    <div class="team-row__title">
+                        <strong>FSKM</strong>
+                        <div>
+                            <span class="badge badge--gold">Racket</span>
+                            <button type="button" class="btn btn--sm btn--ghost">Edit team</button>
+                            <button type="button" class="btn btn--sm btn--primary">Add player</button>
+                        </div>
+                    </div>
+
+                    <div class="team-stats team-stats--racket" aria-label="FSKM badminton team statistics">
+                        <div class="team-stats__title">Team statistics · Badminton · Open</div>
+                        <div class="team-stats__grid">
+                            <div class="team-stats__item"><span class="team-stats__label">Matches</span><span
+                                    class="team-stats__value">10</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">Match W–L</span><span
+                                    class="team-stats__value">7–3</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">Rubbers W–L</span><span
+                                    class="team-stats__value">18–12</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">Pts for / against</span><span
+                                    class="team-stats__value">412 / 388</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">Table rank</span><span
+                                    class="team-stats__value team-stats__value--accent">3rd</span></div>
+                        </div>
+                    </div>
+
+                    <div class="racket-split">
+                        <div class="racket-col">
+                            <h4>Singles</h4>
+                            <table class="player-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Student ID</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Nur Aina</td>
+                                        <td>2023665544</td>
+                                        <td><span class="inline-actions"><button type="button"
+                                                    class="btn btn--sm btn--ghost">Edit</button><button type="button"
+                                                    class="btn btn--sm btn--danger">Delete</button></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="racket-col">
+                            <h4>Doubles</h4>
+                            <table class="player-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Student ID</th>
+                                        <th>Pair</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Hafiz &amp; Raihan</td>
+                                        <td>2023… / 2023…</td>
+                                        <td>Pair A</td>
+                                        <td><span class="inline-actions"><button type="button"
+                                                    class="btn btn--sm btn--ghost">Edit</button><button type="button"
+                                                    class="btn btn--sm btn--danger">Delete</button></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-row">
+                    <div class="team-row__title">
+                        <strong>Engineering</strong>
+                        <div>
+                            <span class="badge badge--gold">Racket</span>
+                            <button type="button" class="btn btn--sm btn--ghost">Edit team</button>
+                            <button type="button" class="btn btn--sm btn--primary">Add player</button>
+                        </div>
+                    </div>
+
+                    <div class="team-stats team-stats--racket" aria-label="Engineering badminton team statistics">
+                        <div class="team-stats__title">Team statistics · Badminton · Open</div>
+                        <div class="team-stats__grid">
+                            <div class="team-stats__item"><span class="team-stats__label">Matches</span><span
+                                    class="team-stats__value">8</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">Match W–L</span><span
+                                    class="team-stats__value">4–4</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">Rubbers W–L</span><span
+                                    class="team-stats__value">14–14</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">Pts for / against</span><span
+                                    class="team-stats__value">380 / 381</span></div>
+                            <div class="team-stats__item"><span class="team-stats__label">Table rank</span><span
+                                    class="team-stats__value team-stats__value--accent">6th</span></div>
+                        </div>
+                    </div>
+
+                    <div class="racket-split">
+                        <div class="racket-col">
+                            <h4>Singles</h4>
+                            <p class="hint">No players yet — add via <strong>Add player</strong>.</p>
+                        </div>
+                        <div class="racket-col">
+                            <h4>Doubles</h4>
+                            <p class="hint">Register pairs for league doubles brackets.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="split-panels">
+                <div class="card">
+                    <h3>Add / edit player (form)</h3>
+                    <label for="p-name">Full name</label>
+                    <input id="p-name" placeholder="Full name">
+                    <label for="p-id">Student ID</label>
+                    <input id="p-id" placeholder="Student ID">
+                    <label for="p-num">Jersey / seed number (if applicable)</label>
+                    <input id="p-num" placeholder="Number">
+                    <label for="p-pos">Position or role</label>
+                    <select id="p-pos">
+                        <option>Forward</option>
+                        <option>Midfielder</option>
+                        <option>Defender</option>
+                        <option>Goalkeeper</option>
+                        <option>Singles</option>
+                        <option>Doubles</option>
+                    </select>
+                    <label for="p-team">Team</label>
+                    <select id="p-team">
+                        <option>FSKM</option>
+                        <option>Engineering</option>
+                    </select>
+                    <label for="p-sport">Sport</label>
+                    <select id="p-sport">
+                        <option>Football</option>
+                        <option>Badminton</option>
+                    </select>
+                    <button type="button" class="btn btn--primary" style="margin-top:12px;width:auto">Save
+                        player</button>
+                </div>
+                <div class="card">
+                    <h3>Player performance (detail)</h3>
+                    <p>Linked from roster row — example:</p>
+                    <p>Goals: 8</p>
+                    <p>Assists: 5</p>
+                    <p>Yellow cards: 1</p>
+                    <p>Red cards: 0</p>
+                    <p>Rating: 8.9</p>
+                    <p class="hint" style="margin-top:12px">In production, open as drawer or separate page from
+                        <strong>Edit</strong>.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="analytics" class="section">
+            <h2>League standings</h2>
+            <p class="hint section-lead">Simple points tables (no charts). Switch competition in your product; here are two sample tables.</p>
+
+            <div class="standings-stack">
+                <div class="card card--tinted">
+                    <h3>Basketball · Campus League</h3>
+                    <div class="table-scroll">
+                        <table class="data-table data-table--compact league-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Team</th>
+                                    <th>P</th>
+                                    <th>W</th>
+                                    <th>L</th>
+                                    <th>PF</th>
+                                    <th>PA</th>
+                                    <th>Diff</th>
+                                    <th>Pts</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="league-table__row league-table__row--top"><td>1</td><td>FSKM</td><td>6</td><td>5</td><td>1</td><td>482</td><td>401</td><td>+81</td><td><strong>10</strong></td></tr>
+                                <tr class="league-table__row league-table__row--top"><td>2</td><td>Engineering</td><td>6</td><td>4</td><td>2</td><td>455</td><td>420</td><td>+35</td><td><strong>8</strong></td></tr>
+                                <tr><td>3</td><td>Business</td><td>6</td><td>3</td><td>3</td><td>430</td><td>430</td><td>0</td><td>6</td></tr>
+                                <tr><td>4</td><td>Science</td><td>6</td><td>2</td><td>4</td><td>410</td><td>448</td><td>−38</td><td>4</td></tr>
+                                <tr><td>5</td><td>Law</td><td>6</td><td>1</td><td>5</td><td>388</td><td>466</td><td>−78</td><td>2</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card card--tinted">
+                    <h3>Futsal · Inter-Faculty Cup · Group A</h3>
+                    <div class="table-scroll">
+                        <table class="data-table data-table--compact league-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Team</th>
+                                    <th>P</th>
+                                    <th>W</th>
+                                    <th>D</th>
+                                    <th>L</th>
+                                    <th>GF</th>
+                                    <th>GA</th>
+                                    <th>Pts</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="league-table__row league-table__row--top"><td>1</td><td>FSKM</td><td>3</td><td>2</td><td>1</td><td>0</td><td>9</td><td>5</td><td><strong>7</strong></td></tr>
+                                <tr><td>2</td><td>Law</td><td>3</td><td>1</td><td>1</td><td>1</td><td>8</td><td>8</td><td>4</td></tr>
+                                <tr><td>3</td><td>Architecture</td><td>3</td><td>1</td><td>0</td><td>2</td><td>7</td><td>9</td><td>3</td></tr>
+                                <tr><td>4</td><td>Medicine</td><td>3</td><td>1</td><td>0</td><td>2</td><td>6</td><td>8</td><td>3</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="admin" class="section">
+            <h2>Admin panel</h2>
+
+            <div class="admin-hero">
+                <div class="stat-tile">
+                    <div class="stat-value">24</div>
+                    <div class="stat-label">Active teams</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">Sports configured</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-value">312</div>
+                    <div class="stat-label">Registered players</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-value">18</div>
+                    <div class="stat-label">Live &amp; upcoming matches</div>
+                </div>
+            </div>
+
+            <div class="admin-grid">
+                <div class="admin-tile">
+                    <div class="admin-tile__icon admin-tile__icon--navy" aria-hidden="true">👤</div>
+                    <h3>Users &amp; access</h3>
+                    <p>Create accounts, reset passwords, and map users to faculties or roles.</p>
+                    <div class="button-group">
+                        <button type="button" class="btn btn--primary">Add user</button>
+                        <button type="button" class="btn btn--secondary">Assign roles</button>
+                        <button type="button" class="btn btn--ghost">Manage permissions</button>
+                    </div>
+                </div>
+
+                <div class="admin-tile">
+                    <div class="admin-tile__icon" aria-hidden="true">🏆</div>
+                    <h3>Competitions</h3>
+                    <p>Seasons, brackets, and registration windows across sports.</p>
+                    <div class="button-group">
+                        <a href="#competitions" class="btn btn--primary" style="text-decoration:none;display:inline-block">Competition management</a>
+                        <button type="button" class="btn btn--ghost">Edit schedule</button>
+                    </div>
+                </div>
+
+                <div class="admin-tile">
+                    <div class="admin-tile__icon admin-tile__icon--gold" aria-hidden="true">⚙</div>
+                    <h3>Sports catalogue</h3>
+                    <p>Enable or disable sports, default rules, and lineup sizes.</p>
+                    <div class="button-group">
+                        <button type="button" class="btn btn--gold">Add sports</button>
+                        <button type="button" class="btn btn--ghost">Rule templates</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <script>
+        (function () {
+            var sportSel = document.getElementById("dash-sport");
+            var compSel = document.getElementById("dash-competition");
+            var titleEl = document.getElementById("dash-matches-heading");
+            var subEl = document.getElementById("dash-matches-sub");
+            if (!sportSel || !compSel || !titleEl || !subEl) return;
+
+            function sportLabel(val) {
+                var opt = sportSel.querySelector("option[value=\"" + val + "\"]");
+                return opt ? opt.textContent.trim() : val;
+            }
+
+            function syncBracketHeader() {
+                var opt = compSel.options[compSel.selectedIndex];
+                if (opt) {
+                    titleEl.textContent = opt.textContent.trim();
+                    var sp = opt.getAttribute("data-sport") || "football";
+                    subEl.textContent =
+                        sportLabel(sp) +
+                        " · Fixture list with stage label (League, Quarter-final, …) and match number.";
+                }
+            }
+
+            function filterCompetitions() {
+                var s = sportSel.value;
+                var opts = compSel.querySelectorAll("option");
+                var firstVisible = -1;
+                for (var i = 0; i < opts.length; i++) {
+                    var ds = opts[i].getAttribute("data-sport") || "";
+                    var show = s === "all" || s === ds;
+                    opts[i].disabled = !show;
+                    opts[i].hidden = !show;
+                    if (show && firstVisible < 0) firstVisible = i;
+                }
+                if (firstVisible < 0) {
+                    for (var j = 0; j < opts.length; j++) {
+                        opts[j].disabled = false;
+                        opts[j].hidden = false;
+                    }
+                    compSel.selectedIndex = 0;
+                } else if (compSel.selectedOptions.length && compSel.selectedOptions[0].disabled) {
+                    compSel.selectedIndex = firstVisible;
+                }
+                syncBracketHeader();
+            }
+
+            sportSel.addEventListener("change", filterCompetitions);
+            compSel.addEventListener("change", syncBracketHeader);
+            filterCompetitions();
+        })();
+
+        (function () {
+            var advSport = document.getElementById("adv-sport");
+            var advComp = document.getElementById("adv-comp");
+            if (advSport && advComp) {
+                function filterAdvComp() {
+                    var s = advSport.value;
+                    var opts = advComp.querySelectorAll("option");
+                    var first = -1;
+                    for (var i = 0; i < opts.length; i++) {
+                        var ds = opts[i].getAttribute("data-sport") || "";
+                        var ok = s === ds;
+                        opts[i].disabled = !ok;
+                        opts[i].hidden = !ok;
+                        if (ok && first < 0) first = i;
+                    }
+                    if (first < 0) {
+                        for (var j = 0; j < opts.length; j++) {
+                            opts[j].disabled = false;
+                            opts[j].hidden = false;
+                        }
+                        advComp.selectedIndex = 0;
+                    } else if (advComp.selectedOptions.length && advComp.selectedOptions[0].disabled) {
+                        advComp.selectedIndex = first;
+                    }
+                }
+                advSport.addEventListener("change", filterAdvComp);
+                filterAdvComp();
+            }
+
+            document.querySelectorAll("[data-advance-match]").forEach(function (article) {
+                article.querySelectorAll(".advance-pick").forEach(function (btn) {
+                    btn.addEventListener("click", function () {
+                        article.querySelectorAll(".advance-pick").forEach(function (b) {
+                            b.classList.remove("is-winner");
+                        });
+                        btn.classList.add("is-winner");
+                    });
+                });
+            });
+
+            var listSport = document.getElementById("list-sport");
+            var listLeague = document.getElementById("list-league");
+            var matchesList = document.getElementById("matches-list");
+            var emptyEl = document.getElementById("matches-list-empty");
+            if (!listSport || !listLeague || !matchesList) return;
+
+            function filterListLeagueOptions() {
+                var s = listSport.value;
+                var opts = listLeague.querySelectorAll("option");
+                var first = -1;
+                for (var i = 0; i < opts.length; i++) {
+                    var ds = opts[i].getAttribute("data-sport");
+                    var isAll = opts[i].value === "all";
+                    var ok = isAll || s === "all" || !ds || s === ds;
+                    opts[i].disabled = !ok;
+                    opts[i].hidden = !ok;
+                    if (ok && first < 0) first = i;
+                }
+                if (listLeague.selectedOptions.length && listLeague.selectedOptions[0].disabled && first >= 0) {
+                    listLeague.selectedIndex = first;
+                }
+            }
+
+            function applyMatchFilters() {
+                var s = listSport.value;
+                var lg = listLeague.value;
+                var items = matchesList.querySelectorAll(".matches-list__item");
+                var n = 0;
+                items.forEach(function (li) {
+                    var ds = li.getAttribute("data-sport") || "";
+                    var dl = li.getAttribute("data-league") || "";
+                    var okSport = s === "all" || ds === s;
+                    var okLeague = lg === "all" || dl === lg;
+                    var show = okSport && okLeague;
+                    li.hidden = !show;
+                    if (show) n++;
+                });
+                if (emptyEl) emptyEl.hidden = n > 0;
+            }
+
+            function onListFilterChange() {
+                filterListLeagueOptions();
+                applyMatchFilters();
+            }
+
+            listSport.addEventListener("change", onListFilterChange);
+            listLeague.addEventListener("change", applyMatchFilters);
+            onListFilterChange();
+        })();
+    </script>
+</body>
+
+</html>
