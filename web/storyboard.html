@@ -19,7 +19,9 @@
 
         <nav>
             <ul>
-                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#signup">Sign-up</a></li>
+                <li><a href="#login">Login</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>       
                 <li><a href="#matches">Matches</a></li>
                 <li><a href="#competitions">Competition management</a></li>
                 <li><a href="#teams">Teams &amp; coaches</a></li>
@@ -39,6 +41,94 @@
         <p class="description">Liga-Kampus multi-sport university management: live events, squads by sport and team, and
             admin tools — styled with navy, purple, gold, and white inspired by UiTM branding.</p>
 
+    <div class="auth-wrapper">
+        <section id="signup" class="login-container">
+
+            <!-- LEFT IMAGE -->
+            <div class="login-image">
+                <img src="images/login" alt="Signup Image">
+            </div>
+
+            <!-- RIGHT FORM -->
+            <div class="login-box">
+
+                <div class="management-card">
+
+                    <header class="management-header">
+                        <h2>Sign Up</h2>
+                    </header>
+
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" placeholder="Enter full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" placeholder="Enter email">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" placeholder="Enter password">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Faculty</label>
+                        <input type="text" placeholder="Enter faculty">
+                    </div>
+
+                    <button type="button" class="btn-edit">Sign Up</button>
+
+                    <span class="signup-text">
+                        Already have an account <a href="#" class="signup">Log in</a>
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+        
+        <section id="login" class="login-container">
+
+            <!-- LEFT IMAGE -->
+            <div class="login-image">
+                <img src="images/login" alt="Login Image">
+            </div>
+
+            <!-- RIGHT FORM -->
+            <div class="login-box">
+
+                <div class="management-card">
+
+                    <header class="management-header">
+                        <h2>Log In</h2>
+                    </header>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" placeholder="Enter email">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" placeholder="Enter password">
+                    </div>
+
+                    <a href="#" class="forgot">Forgot Password?</a>
+
+                    <button type="button" class="btn-edit">Log In</button>
+                    
+                        <span class="signup-text">Don't have an account <a href="#" class="signup">Sign-up</a></span>
+
+                </div>
+
+            </div>
+
+        </section>
+    </div>
+        
         <section id="dashboard" class="section">
             <h2>Dashboard</h2>
 
@@ -258,7 +348,7 @@
 
             </div><!-- /.dashboard-stack -->
         </section>
-
+        
         <section id="competitions" class="section management-container">
     <div class="management-card">
         <header class="management-header">
