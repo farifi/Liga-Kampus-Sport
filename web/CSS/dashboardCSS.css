@@ -1,0 +1,398 @@
+/* ============================================================
+   LIGA-KAMPUS — dashboardCSS.css
+   Contains: dashboard-specific styles only
+   Depends on: navbarStyle.css → globalStyle.css
+   ============================================================ */
+
+/* ── 1. Dashboard stack layout ─────────────────────────────── */
+.dashboard-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+/* Staggered section entry */
+.dashboard-stack > * {
+    animation: fadeUp 0.35s ease both;
+}
+.dashboard-stack > *:nth-child(1) { animation-delay: 0.05s; }
+.dashboard-stack > *:nth-child(2) { animation-delay: 0.12s; }
+.dashboard-stack > *:nth-child(3) { animation-delay: 0.19s; }
+.dashboard-stack > *:nth-child(4) { animation-delay: 0.26s; }
+
+/* ── 2. Toolbar ────────────────────────────────────────────── */
+.dashboard-toolbar {
+    padding: 20px 24px;
+}
+
+.dashboard-toolbar__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 16px 20px;
+    margin-bottom: 14px;
+}
+
+.dashboard-toolbar__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.dashboard-toolbar__field select {
+    min-width: 200px;
+    margin-bottom: 0;
+}
+
+.dashboard-toolbar__label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin: 0;
+}
+
+.dashboard-toolbar__cta {
+    margin-left: auto;
+    align-self: flex-end;
+}
+
+.dashboard-toolbar__hint {
+    margin: 0;
+    font-size: 12px;
+    color: var(--muted-light);
+}
+
+/* ── 3. Two-column layout (Leagues + Live) ─────────────────── */
+.dashboard-columns {
+    display: grid;
+    grid-template-columns: 1.2fr 0.85fr;
+    gap: 24px;
+}
+
+/* ── 4. League list ────────────────────────────────────────── */
+.league-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.league-list__item {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    transition: background var(--transition);
+}
+
+.league-list__item:first-child { padding-top: 0; }
+.league-list__item:last-child  { border-bottom: none; padding-bottom: 0; }
+
+.league-list__main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+}
+
+.league-list__main strong {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--navy);
+}
+
+.league-list__meta {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 10px;
+}
+
+.league-list__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.league-list__phase {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--purple-bright);
+}
+
+/* ── 5. Featured Live card ─────────────────────────────────── */
+.card--purple {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-left: 4px solid var(--purple-bright);
+}
+
+.card--purple > h3 + p,
+.card--purple > p { margin-bottom: 0; }
+.card--purple .hint { margin-top: 0; }
+
+.live-score {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--navy), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+}
+
+.live-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(245, 197, 24, 0.22);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Pulsing dot inside LIVE tag */
+.live-tag::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #e53e3e;
+    animation: livePulse 1.4s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.4; transform: scale(0.75); }
+}
+
+/* ── 6. Fixture list ───────────────────────────────────────── */
+.dashboard-matches-card__title {
+    margin-bottom: 6px;
+    font-size: 1.05rem;
+    color: var(--navy);
+}
+
+.dashboard-matches-card__intro {
+    margin-bottom: 18px;
+}
+
+.dash-matches-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dash-match-card {
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(19, 42, 74, 0.1);
+    background: rgba(255, 255, 255, 0.5);
+    transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+
+.dash-match-card:hover {
+    border-color: rgba(124, 58, 237, 0.3);
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.08);
+    transform: translateX(3px);
+}
+
+/* Fixture label row */
+.fixture-labels {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 10px;
+    margin-bottom: 10px;
+}
+
+.fixture-type {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 4px 9px;
+    border-radius: 5px;
+}
+
+.fixture-type--league   { background: var(--purple-soft); color: var(--purple); }
+.fixture-type--knockout { background: var(--gold-soft); color: var(--navy-soft); }
+.fixture-type--cup      { background: rgba(124, 58, 237, 0.18); color: var(--navy); }
+
+.fixture-match-no {
+    font-size: 11px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+    padding: 3px 8px;
+    border-radius: 5px;
+    background: rgba(10, 22, 40, 0.06);
+}
+
+/* Match card body grid */
+.dash-match-card__body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    align-items: center;
+}
+
+/* Match row elements */
+.matches-list__when {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.matches-list__main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px 16px;
+    flex-wrap: wrap;
+}
+
+.matches-list__team {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--navy);
+    min-width: 5em;
+    text-align: center;
+}
+
+.matches-list__score {
+    font-variant-numeric: tabular-nums;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--muted);
+    min-width: 4em;
+    text-align: center;
+}
+
+.matches-list__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* ── 7. Status pills ───────────────────────────────────────── */
+.status-pill {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(10, 22, 40, 0.08);
+    color: var(--navy-soft);
+    white-space: nowrap;
+}
+
+.status-pill--live {
+    background: rgba(229, 62, 62, 0.15);
+    color: #c53030;
+    animation: pulse-soft 2s ease-in-out infinite;
+}
+
+.status-pill--done {
+    background: rgba(16, 185, 129, 0.15);
+    color: #047857;
+}
+
+@keyframes pulse-soft {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.65; }
+}
+
+/* ── 8. League table ───────────────────────────────────────── */
+.data-table {
+    width: 100%;
+    min-width: 620px;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.data-table th,
+.data-table td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+.data-table th {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    font-weight: 700;
+    background: rgba(250, 248, 255, 0.9);
+    position: sticky;
+    top: 0;
+}
+
+.data-table tbody tr {
+    transition: background var(--transition);
+}
+
+.data-table tbody tr:hover td {
+    background: rgba(124, 58, 237, 0.05);
+}
+
+.data-table--compact th,
+.data-table--compact td { padding: 8px 10px; }
+
+/* Top rows highlighted gold */
+.league-table__row--top td {
+    background: rgba(245, 197, 24, 0.10);
+}
+
+.league-table__row--top:hover td {
+    background: rgba(245, 197, 24, 0.18) !important;
+}
+
+/* ── 9. Responsive ─────────────────────────────────────────── */
+@media (max-width: 900px) {
+    .dashboard-columns {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-toolbar__cta {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+@media (min-width: 720px) {
+    .dash-match-card__body {
+        grid-template-columns: minmax(130px, 180px) 1fr auto auto;
+        gap: 10px 14px;
+    }
+
+    .dash-match-card__body .matches-list__when { grid-row: 1 / -1; }
+    .dash-match-card__body .btn               { grid-row: 1 / -1; justify-self: end; }
+}
+
+@media (max-width: 640px) {
+    .dashboard-toolbar__field select { min-width: 100%; }
+    .live-score { font-size: 1.85rem; }
+    .matches-list__team { min-width: 3.5em; font-size: 13px; }
+}
