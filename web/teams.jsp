@@ -4,8 +4,8 @@
     <head>
         <%@ include file="/common/head.jsp" %>
 
-        <link rel="stylesheet"
-              href="${pageContext.request.contextPath}/CSS/dashboardCSS.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/dashboardCSS.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/teamsCSS.css">
 
     </head>
 
