@@ -1,0 +1,131 @@
+/* ── competitionCSS.css ──────────────────────────────────────────────────── */
+
+.management-container {
+    padding: 2rem;
+}
+
+.management-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    border: 1px solid #e0e0e0;
+    overflow: hidden;          /* clips anything that bleeds outside the card */
+}
+
+.management-header h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #1a1a1a;
+}
+
+/* ── Table wrapper ───────────────────────────────────────────────────────── */
+.table-responsive {
+    overflow-x: auto;
+    width: 100%;
+}
+
+/* ── Table ───────────────────────────────────────────────────────────────── */
+.management-table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+    table-layout: fixed;       /* forces columns to share width evenly */
+}
+
+/* Column width distribution */
+.management-table th:nth-child(1) { width: 14%; }  /* Match ID */
+.management-table th:nth-child(2) { width: 28%; }  /* Fixture */
+.management-table th:nth-child(3) { width: 10%; }  /* Score */
+.management-table th:nth-child(4) { width: 20%; }  /* Venue & Date */
+.management-table th:nth-child(5) { width: 28%; }  /* Actions */
+
+.management-table thead {
+    border-bottom: 2px solid #e9ecef;
+}
+
+.management-table th {
+    text-align: left;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: #6c757d;
+    font-weight: 600;
+    padding: 10px 14px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    background: #fafafa;
+}
+
+.management-table td {
+    padding: 14px 14px;
+    font-size: 0.88rem;
+    color: #333;
+    vertical-align: middle;
+    border-bottom: 1px solid #f0f0f0;
+    overflow: hidden;          /* prevents any cell from bleeding out */
+}
+
+.management-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.management-table tbody tr:hover td {
+    background: #faf8ff;
+}
+
+/* ── Action buttons cell ─────────────────────────────────────────────────── */
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;           /* wraps to next line instead of overflowing */
+}
+
+/* ── Edit / Set Score ────────────────────────────────────────────────────── */
+.btn-edit {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s;
+    background: #f3f0ff;
+    color: #7950f2;
+    border: 1px solid #dcd3ff;
+    white-space: nowrap;
+    line-height: 1.4;
+    flex-shrink: 0;
+}
+
+.btn-edit:hover {
+    background: #7950f2;
+    color: #fff;
+    border-color: #7950f2;
+}
+
+/* ── Void / Remove ───────────────────────────────────────────────────────── */
+.btn-withdraw {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s;
+    background: #fff5f5;
+    color: #c92a2a;
+    border: 1px solid #ffc9c9;
+    white-space: nowrap;
+    line-height: 1.4;
+    flex-shrink: 0;
+}
+
+.btn-withdraw:hover {
+    background: #c92a2a;
+    color: #fff;
+    border-color: #c92a2a;
+}
+
+/* ── Utilities ───────────────────────────────────────────────────────────── */
+.font-bold  { font-weight: 600; }
+.text-muted { color: #adb5bd; }
