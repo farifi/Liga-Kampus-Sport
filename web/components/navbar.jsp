@@ -1,5 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
+<%
+//    String role = (String) session.getAttribute("role");
+
+    String role = null;
+
+    if (role == null) {
+        role = "GUEST";
+    }
+%>
+
 <!-- Mobile hamburger toggle -->
 <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
     <span></span>
@@ -10,24 +20,95 @@
 <!-- Overlay (mobile) -->
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-<!-- Sidebar -->
+<!-- Sidebar -->    
 <aside class="sidebar" id="sidebar">
     <div class="logo">LIGA-KAMPUS</div>
     <p class="sub">University Multi-Sport System · UiTM</p>
     <nav>
         <ul>
-            <li><a href="${pageContext.request.contextPath}/dashboard.jsp">Dashboard</a></li>
-            <li><a href="${pageContext.request.contextPath}/matches.jsp">Matches</a></li>
-            <li><a href="${pageContext.request.contextPath}/competitions.jsp">Competition Management</a></li>
-            <li><a href="${pageContext.request.contextPath}/teams.jsp">Teams &amp; Coaches</a></li>
-            <li><a href="${pageContext.request.contextPath}/players.jsp">Players</a></li>
-            <li><a href="${pageContext.request.contextPath}/standings.jsp">League Standings</a></li>
-            <li><a href="${pageContext.request.contextPath}/admin.jsp">Admin Panel</a></li>
+
+            <% if ("ADMIN".equals(role)) { %>
+            
+                <li>
+                    <a href="${pageContext.request.contextPath}/admin/admin.jsp">
+                        Admin Panel
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="${pageContext.request.contextPath}/dashboard.jsp">
+                        Dashboard
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="${pageContext.request.contextPath}/admin/competitions.jsp">
+                        Competition Management
+                    </a>
+                </li>
+
+                <li>
+                    <a href="${pageContext.request.contextPath}/admin/teams.jsp">
+                        Teams & Coaches
+                    </a>
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/matches.jsp">
+                        Matches
+                    </a>
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/league.jsp">
+                        League Standings
+                    </a>
+                </li>
+
+            <% } else if ("TEAM_MANAGER".equals(role)) { %>
+                <li>
+                    <a href="${pageContext.request.contextPath}/dashboard.jsp">
+                        Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a href="${pageContext.request.contextPath}/players.jsp">
+                        Player Management
+                    </a>
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/matches.jsp">
+                        Matches
+                    </a>
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/league.jsp">
+                        League Standings
+                    </a>
+                </li>
+
+            <% } else { %>
+                <li>
+                    <a href="${pageContext.request.contextPath}/dashboard.jsp">
+                        Dashboard
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="${pageContext.request.contextPath}/matches.jsp">
+                        Matches
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="${pageContext.request.contextPath}/league.jsp">
+                        League Standings
+                    </a>
+                </li>
+            <% } %>
         </ul>
     </nav>
 </aside>
 
-<!-- Mobile sidebar JS -->
 <script>
     (function () {
         const toggle  = document.getElementById('navToggle');

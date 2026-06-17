@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/components/componentsCSS/navbarStyle.css">
 
 <!-- 2. Header component styles -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/components/componentsCSS/headerStyle.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/components/componentsCSS/headerCSS.css">
 
 <!-- 3. Global shared styles (body, cards, buttons, forms…) -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/globalStyle.css">
