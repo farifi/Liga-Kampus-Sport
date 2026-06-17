@@ -1,0 +1,220 @@
+/* ============================================================
+   LIGA-KAMPUS — teamsCSS.css
+   Contains: Team and Coach management styles only
+   Depends on: globalStyle.css
+   ============================================================ */
+
+/* ── 1. Side-by-side layout for Add Team & Add Coach ───────── */
+.two-column-layout {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+}
+
+.two-column-layout > * {
+    flex: 1;
+    min-width: 250px;
+}
+
+/* Remove margin-top from Add Coach card when in side-by-side */
+.two-column-layout .card:last-child {
+    margin-top: 0 !important;
+}
+
+/* ── 2. Team Row ───────────────────────────────────────────── */
+.team-row {
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    padding: 20px;
+    margin-bottom: 24px;
+    transition: box-shadow var(--transition);
+}
+
+.team-row:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.team-row__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.team-row__title strong {
+    font-size: 1.2rem;
+    color: var(--navy);
+}
+
+.team-row__title > div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* ── 3. Team Statistics ────────────────────────────────────── */
+.team-stats {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(124, 58, 237, 0.02));
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    margin-bottom: 20px;
+    border-left: 3px solid var(--purple-bright);
+}
+
+.team-stats__title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin-bottom: 12px;
+}
+
+.team-stats__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, auto));
+    gap: 12px;
+}
+
+.team-stats__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+}
+
+.team-stats__label {
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.team-stats__value {
+    font-weight: 700;
+    color: var(--navy);
+}
+
+.team-stats__value--accent {
+    color: var(--purple-bright);
+    font-size: 1.1em;
+}
+
+/* Racket sports specific stats */
+.team-stats--racket .team-stats__grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, auto));
+}
+
+/* ── 4. Coach Card ─────────────────────────────────────────── */
+.coach-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    padding: 20px;
+    margin-bottom: 24px;
+    transition: box-shadow var(--transition);
+}
+
+.coach-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.coach-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.coach-card__header strong {
+    font-size: 1.2rem;
+    color: var(--navy);
+}
+
+.coach-card__details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.coach-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.coach-detail__label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+}
+
+.coach-detail__value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+}
+
+.coach-stats {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(124, 58, 237, 0.02));
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    margin-top: 16px;
+    border-left: 3px solid var(--gold);
+}
+
+.coach-stats__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, auto));
+    gap: 12px;
+}
+
+/* ── 5. Add Coach Form Layout ───────────────────────────────── */
+.add-coach-form {
+    margin-top: 24px;
+}
+
+/* ── 6. Badges ─────────────────────────────────────────────── */
+.badge--gold {
+    background: var(--gold-soft);
+    color: var(--navy);
+}
+
+/* ── 7. Responsive Styles ──────────────────────────────────── */
+@media (max-width: 900px) {
+    .two-column-layout {
+        flex-direction: column;
+    }
+    
+    .two-column-layout > * {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .team-stats__grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .coach-card__details {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .coach-stats__grid {
+        grid-template-columns: 1fr;
+    }
+}
