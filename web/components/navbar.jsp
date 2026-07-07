@@ -1,112 +1,38 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-
 <%
-//    String role = (String) session.getAttribute("role");
-
-    String role = null;
-
-    if (role == null) {
-        role = "GUEST";
-    }
+    String role = (String) session.getAttribute("role");
+    if (role == null) { role = "GUEST"; }
 %>
-
-<!-- Mobile hamburger toggle -->
 <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-    <span></span>
-    <span></span>
-    <span></span>
+    <span></span><span></span><span></span>
 </button>
-
-<!-- Overlay (mobile) -->
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-<!-- Sidebar -->    
 <aside class="sidebar" id="sidebar">
-    <div class="logo">LIGA-KAMPUS</div>
-    <p class="sub">University Multi-Sport System · UiTM</p>
+    <div class="logo"><span class="logo-mark">LK</span> Liga-Kampus</div>
+    <p class="sub">Inter-Faculty Sport System</p>
+
     <nav>
         <ul>
+            <li class="nav-section-label">General</li>
+            <li><a href="${pageContext.request.contextPath}/dashboard"><span class="nav-icon">&#127968;</span> Dashboard</a></li>
+            <li><a href="${pageContext.request.contextPath}/matches"><span class="nav-icon">&#9917;</span> Matches</a></li>
+            <li><a href="${pageContext.request.contextPath}/league"><span class="nav-icon">&#128202;</span> League Standings</a></li>
 
             <% if ("ADMIN".equals(role)) { %>
-            
-                <li>
-                    <a href="${pageContext.request.contextPath}/admin/admin.jsp">
-                        Admin Panel
-                    </a>
-                </li>
-                
-                <li>
-                    <a href="${pageContext.request.contextPath}/dashboard.jsp">
-                        Dashboard
-                    </a>
-                </li>
-                
-                <li>
-                    <a href="${pageContext.request.contextPath}/admin/competitions.jsp">
-                        Competition Management
-                    </a>
-                </li>
+                <li class="nav-section-label">Administration</li>
+                <li><a href="${pageContext.request.contextPath}/admin/admin.jsp"><span class="nav-icon">&#128100;</span> Admin Panel</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/competition"><span class="nav-icon">&#127942;</span> Competitions</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/team"><span class="nav-icon">&#128101;</span> Teams &amp; Coaches</a></li>
 
-                <li>
-                    <a href="${pageContext.request.contextPath}/admin/teams.jsp">
-                        Teams & Coaches
-                    </a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/matches.jsp">
-                        Matches
-                    </a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/league.jsp">
-                        League Standings
-                    </a>
-                </li>
-
-            <% } else if ("TEAM_MANAGER".equals(role)) { %>
-                <li>
-                    <a href="${pageContext.request.contextPath}/dashboard.jsp">
-                        Dashboard
-                    </a>
-                </li>
-
-                <li>
-                    <a href="${pageContext.request.contextPath}/players.jsp">
-                        Player Management
-                    </a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/matches.jsp">
-                        Matches
-                    </a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/league.jsp">
-                        League Standings
-                    </a>
-                </li>
-
-            <% } else { %>
-                <li>
-                    <a href="${pageContext.request.contextPath}/dashboard.jsp">
-                        Dashboard
-                    </a>
-                </li>
-                
-                <li>
-                    <a href="${pageContext.request.contextPath}/matches.jsp">
-                        Matches
-                    </a>
-                </li>
-                
-                <li>
-                    <a href="${pageContext.request.contextPath}/league.jsp">
-                        League Standings
-                    </a>
-                </li>
+            <% } else if ("MANAGER".equals(role)) { %>
+                <li class="nav-section-label">Team Management</li>
+                <li><a href="${pageContext.request.contextPath}/manager/players"><span class="nav-icon">&#127955;</span> Player Management</a></li>
             <% } %>
         </ul>
     </nav>
+
+    <div class="sidebar-footer">LIGA-KAMPUS &middot; Inter-Faculty Tournament Manager</div>
 </aside>
 
 <script>
@@ -122,7 +48,6 @@
             toggle.setAttribute('aria-expanded', 'true');
             document.body.style.overflow = 'hidden';
         }
-
         function closeNav() {
             sidebar.classList.remove('is-open');
             overlay.classList.remove('is-visible');
@@ -130,19 +55,13 @@
             toggle.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
         }
-
-        toggle.addEventListener('click', function () {
-            sidebar.classList.contains('is-open') ? closeNav() : openNav();
-        });
-
+        toggle.addEventListener('click', () => sidebar.classList.contains('is-open') ? closeNav() : openNav());
         overlay.addEventListener('click', closeNav);
 
-        /* Highlight active link */
         const links = sidebar.querySelectorAll('a');
-        links.forEach(function (link) {
-            if (link.href === window.location.href) {
-                link.classList.add('is-active');
-            }
+        const currentUrl = window.location.href.split('?')[0];
+        links.forEach(link => {
+            if (link.href.split('?')[0] === currentUrl) link.classList.add('is-active');
         });
     })();
 </script>

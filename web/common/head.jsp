@@ -3,10 +3,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LIGA-KAMPUS</title>
 
-<!-- Google Fonts -->
+<!-- Google Fonts: Playfair Display for headlines, Inter for UI/body -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <!-- 1. Variables + Reset + Sidebar -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/components/componentsCSS/navbarStyle.css">

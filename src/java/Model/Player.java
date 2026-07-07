@@ -1,32 +1,33 @@
-package Model; 
+package Model;
 
 public class Player {
-    // Attributes
-    private String playerId; 
+    private int playerId;
     private Team team;       // Maps to FK1 TEAM_ID
-    private Sports sport;    // Maps to FK1 SPORT_ID
+    private Sport sport;     // Maps to FK2 SPORT_ID
     private String playerName;
     private String studentId;
+    private int jerseyNo;
+    private String position;
 
-    // Default Constructor
     public Player() {
     }
 
-    // Parameterized Constructor
-    public Player(String playerId, Team team, Sports sport, String playerName, String studentId) {
+    public Player(int playerId, Team team, Sport sport, String playerName, String studentId,
+                  int jerseyNo, String position) {
         this.playerId = playerId;
         this.team = team;
         this.sport = sport;
         this.playerName = playerName;
         this.studentId = studentId;
+        this.jerseyNo = jerseyNo;
+        this.position = position;
     }
 
-    // Getters and Setters
-    public String getPlayerId() {
+    public int getPlayerId() {
         return playerId;
     }
 
-    public void setPlayerId(String playerId) {
+    public void setPlayerId(int playerId) {
         this.playerId = playerId;
     }
 
@@ -38,11 +39,11 @@ public class Player {
         this.team = team;
     }
 
-    public Sports getSport() {
+    public Sport getSport() {
         return sport;
     }
 
-    public void setSport(Sports sport) {
+    public void setSport(Sport sport) {
         this.sport = sport;
     }
 
@@ -60,5 +61,21 @@ public class Player {
 
     public void setStudentId(String studentId) {
         this.studentId = studentId;
+    }
+
+    public int getJerseyNo() {
+        return jerseyNo;
+    }
+
+    public void setJerseyNo(int jerseyNo) {
+        this.jerseyNo = jerseyNo;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 }

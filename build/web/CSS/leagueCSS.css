@@ -1,106 +1,42 @@
-/* ── analyticsCSS.css ────────────────────────────────────────────────────── */
-/* Shared base variables and layout are in your global/shared CSS.           */
-/* This file covers only what analytics.jsp (league standings) needs.        */
+/* ── leagueCSS.css ────────────────────────────────────────── */
+/* Shared base variables, cards, and tables come from globalStyle.css. */
+/* This file covers only what league.jsp (standings) needs.           */
 
-/* Section intro text */
-.section-lead {
-    margin-bottom: 20px;
-    max-width: 720px;
-}
-
-/* Stack of standings tables */
 .standings-stack {
     display: flex;
     flex-direction: column;
     gap: 22px;
 }
 
-/* Card */
-.card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 22px 24px;
-    box-shadow: var(--shadow);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
+.league-table th:first-child,
+.league-table td:first-child { width: 44px; text-align: center; }
+.league-table th:not(:first-child):not(:nth-child(2)),
+.league-table td:not(:first-child):not(:nth-child(2)) { text-align: center; }
 
-.card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-}
-
-.card--tinted {
-    background: rgba(19, 42, 74, 0.045);
-    border-color: rgba(19, 42, 74, 0.1);
-}
-
-.card--tinted:hover {
-    border-color: rgba(124, 58, 237, 0.25);
-}
-
-.card h3 {
-    margin-bottom: 14px;
-    font-size: 1rem;
-    color: var(--navy);
-}
-
-/* Horizontal scroll wrapper for wide tables */
-.table-scroll {
-    overflow-x: auto;
-    margin: 0 -4px;
-    padding: 0 4px;
-}
-
-/* Data table base */
-.data-table {
-    width: 100%;
-    min-width: 560px;
-    border-collapse: collapse;
-    font-size: 13px;
-}
-
-.data-table th,
-.data-table td {
-    text-align: left;
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--border);
-    vertical-align: middle;
-}
-
-.data-table th {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--muted);
-    font-weight: 600;
-    background: var(--cream);
-}
-
-.data-table tbody tr:hover td {
-    background: rgba(124, 58, 237, 0.04);
-}
-
-/* Compact variant */
-.data-table--compact th,
-.data-table--compact td {
-    padding: 8px 10px;
-    font-size: 12px;
-}
-
-.data-table--compact th {
-    font-size: 10px;
-}
-
-/* League table row highlights */
-.league-table__row--top td {
-    background: rgba(245, 197, 24, 0.12);
-}
-
-/* Hint text */
-.hint {
+.league-table td:first-child .rank-cell {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-weight: 800;
     font-size: 12px;
     color: var(--muted-light);
-    margin-top: 8px;
-    line-height: 1.4;
+    background: rgba(19, 42, 74, 0.05);
 }
+.rank-cell--1 { background: rgba(245, 197, 24, 0.25); color: #92620a; }
+.rank-cell--2 { background: rgba(148, 163, 184, 0.3); color: #475569; }
+.rank-cell--3 { background: rgba(217, 119, 6, 0.18); color: #92400e; }
+
+.league-legend {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted-light);
+}
+.league-legend span strong { color: var(--muted); }

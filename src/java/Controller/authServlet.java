@@ -13,15 +13,18 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "authServlet", urlPatterns = {"/authServlet"})
 public class authServlet extends HttpServlet {
 
+    // Fixed to uppercase to match your navbar logic checking for "TEAM_MANAGER"
+    private static final String DEFAULT_SIGNUP_ROLE = "TEAM_MANAGER"; 
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String action = request.getParameter("action");
+        String action = request.getParameter("action"); 
         HttpSession session = request.getSession();
 
         if (action == null) {
-            response.sendRedirect("auth.jsp");
+            response.sendRedirect(request.getContextPath() + "/auth.jsp");
             return;
         }
 
@@ -30,7 +33,7 @@ public class authServlet extends HttpServlet {
         } else if (action.equalsIgnoreCase("signup")) {
             handleSignup(request, response);
         } else {
-            response.sendRedirect("auth.jsp");
+            response.sendRedirect(request.getContextPath() + "/auth.jsp");
         }
     }
 
@@ -41,27 +44,26 @@ public class authServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         if (email == null || password == null) {
-            response.sendRedirect("auth.jsp");
+            response.sendRedirect(request.getContextPath() + "/auth.jsp");
             return;
         }
 
         UserDAO dao = new UserDAO();
-        User userResult = dao.selectUserByEmailAndPassword(email, password); // ✅ updated
+        User userResult = dao.selectUserByEmailAndPassword(email, password);
 
         if (userResult == null) {
-            response.sendRedirect("auth.jsp");
+            response.sendRedirect(request.getContextPath() + "/auth.jsp?error=invalid_credentials");
             return;
         }
 
+        session.setAttribute("user", userResult); 
+        session.setAttribute("role", userResult.getRole() != null ? userResult.getRole().toUpperCase() : "GUEST");
         session.setAttribute("UserID", userResult.getUserId());
-        request.setAttribute("user", userResult);
 
-        if (userResult.isAdmin()) {
-            request.getRequestDispatcher("admin.jsp").forward(request, response);
-        } else if (userResult.isManager()) {
-            request.getRequestDispatcher("dashboard.jsp").forward(request, response);
+        if (userResult.isAdmin() || "ADMIN".equalsIgnoreCase(userResult.getRole())) {
+            response.sendRedirect(request.getContextPath() + "/dashboard.jsp");
         } else {
-            response.sendRedirect("auth.jsp");
+            response.sendRedirect(request.getContextPath() + "/dashboard.jsp");
         }
     }
 
@@ -74,30 +76,25 @@ public class authServlet extends HttpServlet {
         String faculty  = request.getParameter("faculty");
 
         if (fullName == null || email == null || password == null || faculty == null) {
-            response.sendRedirect("auth.jsp");
+            response.sendRedirect(request.getContextPath() + "/auth.jsp");
             return;
         }
 
         UserDAO dao = new UserDAO();
-        boolean isAlreadyRegistered = dao.selectUserByEmail(email) != null; // ✅ updated
+        boolean isAlreadyRegistered = dao.selectUserByEmail(email) != null;
 
         if (isAlreadyRegistered) {
-            response.sendRedirect("auth.jsp");
+            response.sendRedirect(request.getContextPath() + "/auth.jsp?error=email_taken");
         } else {
             User user = new User();
             user.setFullName(fullName);
             user.setEmail(email);
             user.setPassword(password);
             user.setFaculty(faculty);
+            user.setRole(DEFAULT_SIGNUP_ROLE);
 
             dao.insertUser(user);
-            System.out.println("User registered successfully!");
-            response.sendRedirect("auth.jsp");
+            response.sendRedirect(request.getContextPath() + "/auth.jsp?success=registered");
         }
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Auth Servlet — handles login and signup";
     }
 }

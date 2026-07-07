@@ -7,7 +7,7 @@ public class User {
     private String password;
     private String faculty;
     private String role;
-    
+
     public User() {
         this.userId   = -1;
         this.fullName = "";
@@ -16,7 +16,7 @@ public class User {
         this.faculty  = "";
         this.role     = "";
     }
-    
+
     public User(int userId, String fullName, String email, String password, String faculty, String role) {
         this.userId   = userId;
         this.fullName = fullName;
@@ -25,7 +25,7 @@ public class User {
         this.faculty  = faculty;
         this.role     = role;
     }
-    
+
     public int    getUserId()   { return userId; }
     public String getFullName() { return fullName; }
     public String getEmail()    { return email; }
@@ -33,7 +33,7 @@ public class User {
     public String getFaculty()  { return faculty; }
     public String getRole()     { return role; }
 
-    public void setUserId(int userId)      { this.userId = userId; }
+    public void setUserId(int userId)  { this.userId = userId; }
     public void setFullName(String n)  { this.fullName = n; }
     public void setEmail(String e)     { this.email = e; }
     public void setPassword(String p)  { this.password = p; }

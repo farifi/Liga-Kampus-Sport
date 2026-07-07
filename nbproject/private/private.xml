@@ -3,11 +3,45 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus/src/java/Controller/authServlet.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus/src/java/DAO/UserDAO.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus/web/dashboard.jsp</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus/web/components/header.jsp</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus/web/auth.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/matches.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/Controller/dashboardServlet.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/DAO/CompetitionDAO.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/Model/Sport.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/Model/Team.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/DAO/PlayerDAO.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/DAO/TeamStatisticDAO.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/Controller/CompetitionServlet.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/DAO/SportDAO.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/Model/Player.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/Model/Competition.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/Model/Match.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/Controller/MatchesServlet.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/league.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/DAO/TeamDAO.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/manager/players.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/components/navbar.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/Controller/PlayerServlet.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/Controller/LogoutServlet.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/Controller/TeamServlet.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/admin/admin.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/components/header.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/Util/PointsCalculator.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/auth.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/components/componentsCSS/navbarStyle.css</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/components/componentsCSS/headerCSS.css</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/CSS/globalStyle.css</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/CSS/admin.css</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/CSS/auth.css</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/CSS/competitionCSS.css</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/CSS/dashboardCSS.css</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/dashboard.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/admin/competitions.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/admin/teams.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/CSS/leagueCSS.css</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/CSS/matchesCSS.css</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/CSS/playersCSS.css</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/CSS/teamsCSS.css</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/common/head.jsp</file>
         </group>
     </open-files>
 </project-private>

@@ -1,22 +1,19 @@
 package Model;
 
 public class TeamStatistic {
-    // Attributes
-    private String teamStatId;
+    private int teamStatId;
     private Team team;      // FK TEAM_ID
     private int gamesPlayed;
     private int wins;
     private int draws;
     private int losses;
 
-    // Default Constructor
     public TeamStatistic() {
     }
 
-    // Parameterized Constructor
-    public TeamStatistic(String teamStatId, Team team,
-                         int gamesPlayed, int wins,
-                         int draws, int losses) {
+    public TeamStatistic(int teamStatId, Team team,
+                          int gamesPlayed, int wins,
+                          int draws, int losses) {
         this.teamStatId = teamStatId;
         this.team = team;
         this.gamesPlayed = gamesPlayed;
@@ -25,12 +22,11 @@ public class TeamStatistic {
         this.losses = losses;
     }
 
-    // Getters and Setters
-    public String getTeamStatId() {
+    public int getTeamStatId() {
         return teamStatId;
     }
 
-    public void setTeamStatId(String teamStatId) {
+    public void setTeamStatId(int teamStatId) {
         this.teamStatId = teamStatId;
     }
 

@@ -1,416 +1,138 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="Model.Sport" %>
+<%@ page import="Model.Competition" %>
+<%@ page import="Model.Match" %>
+<%@ page import="Model.User" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <%@ include file="/common/head.jsp" %>
-
-    <!-- Dashboard-specific styles -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/matchesCSS.css">
+    <title>Match Center - LIGA-KAMPUS</title>
+    <script>
+        function togglePanel(matchId) {
+            var panel = document.getElementById("panel-" + matchId);
+            panel.hidden = !panel.hidden;
+        }
+    </script>
 </head>
-
 <body>
 
-    <%@ include file="/components/navbar.jsp" %>
+<%@ include file="/components/navbar.jsp" %>
 
-    <main class="main-content">
+<main class="main-content">
+<%@ include file="/components/header.jsp" %>
 
-        <%@ include file="/components/header.jsp" %>
+<%
+    // Only admins are allowed to edit match results â€” everyone else gets a read-only view.
+    User currentUser = (User) session.getAttribute("user");
+    String userRole = (String) session.getAttribute("role");
+    boolean isAdmin = currentUser != null && ("ADMIN".equals(userRole) || currentUser.isAdmin());
+%>
 
-        <section id="matches" class="section">
+<section class="section">
+    <h2>Match Center</h2>
+    <p class="hint section-lead">Schedules, live scores, and results across every competition.</p>
 
-            <h2>Matches</h2>
-            <p class="hint section-lead">
-                Filter fixtures by sport and league; open a row for live controls below.
-            </p>
+    <%
+        List<Sport> sports = (List<Sport>) request.getAttribute("sports");
+        List<Competition> competitions = (List<Competition>) request.getAttribute("competitions");
+        List<Match> matches = (List<Match>) request.getAttribute("matches");
 
-            <div class="card card--tinted matches-hub">
+        Object rawSportId = request.getAttribute("selectedSportId");
+        String selectedSportId = (rawSportId != null) ? String.valueOf(rawSportId) : "";
+        Object rawCompId = request.getAttribute("selectedCompetitionId");
+        String selectedCompetitionId = (rawCompId != null) ? String.valueOf(rawCompId) : "";
+    %>
 
-                <div class="matches-toolbar">
+    <form action="${pageContext.request.contextPath}/matches" method="GET" class="card card--tinted matches-toolbar" style="margin-bottom:22px;">
+        <div class="matches-toolbar__field">
+            <label for="sportId">Sport</label>
+            <select name="sportId" id="sportId" onchange="this.form.submit()">
+                <option value="all">All Sports</option>
+                <% if (sports != null) {
+                    for (Sport s : sports) {
+                        String selected = String.valueOf(s.getSportId()).equals(selectedSportId) ? "selected" : "";
+                %>
+                <option value="<%= s.getSportId() %>" <%= selected %>><%= s.getSportName() %></option>
+                <% } } %>
+            </select>
+        </div>
 
-                    <div class="matches-toolbar__field">
-                        <label for="list-sport">Sport</label>
+        <div class="matches-toolbar__field matches-toolbar__field--grow">
+            <label for="competitionId">Competition</label>
+            <select name="competitionId" id="competitionId" onchange="this.form.submit()">
+                <option value="all">All Competitions</option>
+                <% if (competitions != null) {
+                    for (Competition c : competitions) {
+                        String selected = String.valueOf(c.getCompetitionId()).equals(selectedCompetitionId) ? "selected" : "";
+                %>
+                <option value="<%= c.getCompetitionId() %>" <%= selected %>>
+                    <%= c.getCompetitionName() %> (<%= c.getSport() != null ? c.getSport().getSportName() : "" %>)
+                </option>
+                <% } } %>
+            </select>
+        </div>
+    </form>
 
-                        <select id="list-sport" name="sport"
-                                aria-label="Filter matches by sport">
+    <ul class="matches-list">
+        <% if (matches != null && !matches.isEmpty()) {
+            for (Match match : matches) {
+                boolean isCompleted = "COMPLETED".equalsIgnoreCase(match.getStatus());
+                String pillClass = isCompleted ? "status-pill--done" : "status-pill--live";
+        %>
+        <li class="matches-list__item">
+            <div class="matches-list__when"><%= match.getDate() %><br><%= match.getVenue() %></div>
 
-                            <option value="all">All sports</option>
-                            <option value="football" selected>Football</option>
-                            <option value="basketball">Basketball</option>
-                            <option value="badminton">Badminton</option>
-                            <option value="volleyball">Volleyball</option>
-                            <option value="futsal">Futsal</option>
-
-                        </select>
-                    </div>
-
-                    <div class="matches-toolbar__field matches-toolbar__field--grow">
-
-                        <label for="list-league">League / competition</label>
-
-                        <select id="list-league" name="league"
-                                aria-label="Filter matches by league">
-
-                            <option value="all">All in sport</option>
-
-                            <option value="liga-premier"
-                                    data-sport="football"
-                                    selected>
-                                Football ? Liga Premier
-                            </option>
-
-                            <option value="futsal-cup"
-                                    data-sport="futsal">
-                                Futsal Cup
-                            </option>
-
-                            <option value="bb-campus"
-                                    data-sport="basketball">
-                                Basketball Campus League
-                            </option>
-
-                            <option value="bad-open"
-                                    data-sport="badminton">
-                                Badminton Open
-                            </option>
-
-                            <option value="vb-challenge"
-                                    data-sport="volleyball">
-                                Volleyball Challenge
-                            </option>
-
-                        </select>
-                    </div>
-
+            <div>
+                <div class="matches-list__main">
+                    <span class="matches-list__team"><%= match.getTeam1() != null ? match.getTeam1().getTeamName() : "TBD" %></span>
+                    <span class="matches-list__score">
+                        <% if (isCompleted) { %><%= match.getScore1() %> &ndash; <%= match.getScore2() %><% } else { %>VS<% } %>
+                    </span>
+                    <span class="matches-list__team"><%= match.getTeam2() != null ? match.getTeam2().getTeamName() : "TBD" %></span>
                 </div>
-
-                <ul class="matches-list" id="matches-list">
-
-                    <!-- Match 1 -->
-                    <li class="matches-list__item"
-                        data-sport="football"
-                        data-league="liga-premier">
-
-                        <div class="matches-list__when">
-                            14 May · 20:30 · Stadium A
-                        </div>
-
-                        <div class="matches-list__main">
-                            <span class="matches-list__team">FSKM</span>
-
-                            <span class="matches-list__score">
-                                <strong>2</strong> ?
-                                <strong>1</strong>
-                            </span>
-
-                            <span class="matches-list__team">Engineering</span>
-                        </div>
-
-                        <div class="matches-list__meta">
-                            <span>Football · Liga Premier</span>
-                            <span class="matches-list__round">QF</span>
-                            <span class="status-pill status-pill--live">Live</span>
-                        </div>
-
-                        <button type="button"
-                                class="btn btn--sm btn--ghost matches-list__open">
-                            Open
-                        </button>
-
-                    </li>
-
-                    <!-- Match 2 -->
-                    <li class="matches-list__item"
-                        data-sport="football"
-                        data-league="liga-premier">
-
-                        <div class="matches-list__when">
-                            18 May · 16:00 · Stadium B
-                        </div>
-
-                        <div class="matches-list__main">
-                            <span class="matches-list__team">Science</span>
-                            <span class="matches-list__score">?</span>
-                            <span class="matches-list__team">Law</span>
-                        </div>
-
-                        <div class="matches-list__meta">
-                            <span>Football · Liga Premier</span>
-                            <span class="matches-list__round">League</span>
-                            <span class="status-pill">Scheduled</span>
-                        </div>
-
-                        <button type="button"
-                                class="btn btn--sm btn--ghost matches-list__open">
-                            Open
-                        </button>
-
-                    </li>
-
-                    <!-- Match 3 -->
-                    <li class="matches-list__item"
-                        data-sport="basketball"
-                        data-league="bb-campus">
-
-                        <div class="matches-list__when">
-                            15 May · 17:00 · Indoor 2
-                        </div>
-
-                        <div class="matches-list__main">
-                            <span class="matches-list__team">Business</span>
-                            <span class="matches-list__score">?</span>
-                            <span class="matches-list__team">Science</span>
-                        </div>
-
-                        <div class="matches-list__meta">
-                            <span>Basketball · Campus League</span>
-                            <span class="matches-list__round">League</span>
-                            <span class="status-pill">Scheduled</span>
-                        </div>
-
-                        <button type="button"
-                                class="btn btn--sm btn--ghost matches-list__open">
-                            Open
-                        </button>
-
-                    </li>
-
-                    <!-- Match 4 -->
-                    <li class="matches-list__item"
-                        data-sport="badminton"
-                        data-league="bad-open">
-
-                        <div class="matches-list__when">
-                            15 May · 19:30 · Hall B
-                        </div>
-
-                        <div class="matches-list__main">
-                            <span class="matches-list__team">FSKM (S)</span>
-
-                            <span class="matches-list__score">
-                                <strong>2</strong> ?
-                                <strong>0</strong>
-                            </span>
-
-                            <span class="matches-list__team">
-                                Engineering (S)
-                            </span>
-                        </div>
-
-                        <div class="matches-list__meta">
-                            <span>Badminton · Open</span>
-                            <span class="matches-list__round">QF</span>
-                            <span class="status-pill status-pill--done">FT</span>
-                        </div>
-
-                        <button type="button"
-                                class="btn btn--sm btn--ghost matches-list__open">
-                            Open
-                        </button>
-
-                    </li>
-
-                    <!-- Match 5 -->
-                    <li class="matches-list__item"
-                        data-sport="volleyball"
-                        data-league="vb-challenge">
-
-                        <div class="matches-list__when">
-                            16 May · 16:00 · Main court
-                        </div>
-
-                        <div class="matches-list__main">
-                            <span class="matches-list__team">FPA</span>
-                            <span class="matches-list__score">?</span>
-                            <span class="matches-list__team">FSSR</span>
-                        </div>
-
-                        <div class="matches-list__meta">
-                            <span>Volleyball · Challenge</span>
-                            <span class="matches-list__round">MD6</span>
-                            <span class="status-pill">Scheduled</span>
-                        </div>
-
-                        <button type="button"
-                                class="btn btn--sm btn--ghost matches-list__open">
-                            Open
-                        </button>
-
-                    </li>
-
-                    <!-- Match 6 -->
-                    <li class="matches-list__item"
-                        data-sport="futsal"
-                        data-league="futsal-cup">
-
-                        <div class="matches-list__when">
-                            16 May · 21:00 · Futsal 1
-                        </div>
-
-                        <div class="matches-list__main">
-                            <span class="matches-list__team">Law</span>
-
-                            <span class="matches-list__score">
-                                <strong>4</strong> ?
-                                <strong>4</strong>
-                            </span>
-
-                            <span class="matches-list__team">Architecture</span>
-                        </div>
-
-                        <div class="matches-list__meta">
-                            <span>Futsal · Cup</span>
-                            <span class="matches-list__round">Group C</span>
-                            <span class="status-pill status-pill--done">FT</span>
-                        </div>
-
-                        <button type="button"
-                                class="btn btn--sm btn--ghost matches-list__open">
-                            Open
-                        </button>
-
-                    </li>
-
-                </ul>
-
-                <p class="hint matches-list-empty"
-                   id="matches-list-empty"
-                   hidden>
-                    No fixtures for this sport and league.
-                </p>
-
+                <div class="matches-list__meta">
+                    <span class="badge"><%= match.getSport() != null ? match.getSport().getSportName() : "" %></span>
+                    <span class="matches-list__round"><%= match.getCompetition() != null ? match.getCompetition().getCompetitionName() : "" %></span>
+                    <span class="status-pill <%= pillClass %>"><%= match.getStatus() %></span>
+                </div>
             </div>
 
-            <!-- Live Controls -->
-            <h3 class="matches-live-heading">
-                Live match controls (storyboard)
-            </h3>
+            <% if (isAdmin) { %>
+            <button type="button" class="btn btn--sm btn--ghost matches-list__open" onclick="togglePanel(<%= match.getMatchId() %>)">Edit Result</button>
+            <% } %>
+        </li>
 
-            <p class="hint" style="margin-bottom:14px">
-                Same screen you use during a live game:
-                events, bench, timeline.
-            </p>
-
-            <div class="card large card--tinted">
-
-                <h3>Match event controls</h3>
-
-                <p class="hint" style="margin-bottom:16px">
-                    Team sports (football, futsal, basketball, volleyball):
-                    substitutions, cards, and bench.
-                    Racket sports: events only ? no bench.
-                </p>
-
-                <div class="button-group">
-
-                    <button type="button">Add goal</button>
-                    <button type="button">Add assist</button>
-                    <button type="button">Yellow card</button>
-                    <button type="button">Red card</button>
-                    <button type="button">Substitution</button>
-
-                    <button type="button"
-                            class="btn btn--gold">
-                        Player injury
-                    </button>
-
+        <% if (isAdmin) { %>
+        <li id="panel-<%= match.getMatchId() %>" hidden>
+            <form action="${pageContext.request.contextPath}/matches" method="POST" class="card card--tinted match-edit-panel">
+                <input type="hidden" name="matchId" value="<%= match.getMatchId() %>">
+                <div class="form-group">
+                    <label><%= match.getTeam1() != null ? match.getTeam1().getTeamName() : "Team 1" %> Score</label>
+                    <input type="number" name="score1" value="<%= match.getScore1() %>" min="0" required>
                 </div>
-
-                <div class="match-layout">
-
-                    <!-- Active Players -->
-                    <div class="lineup-panel">
-
-                        <h4>On pitch / court ? FSKM</h4>
-
-                        <div class="player-chip">
-                            Ahmad <span>#10 · FW</span>
-                        </div>
-
-                        <div class="player-chip">
-                            Daniel <span>#7 · MF</span>
-                        </div>
-
-                        <div class="player-chip">
-                            Faris <span>#9 · FW</span>
-                        </div>
-
-                        <div class="player-chip">
-                            Ikram <span>#4 · DF</span>
-                        </div>
-
-                        <p class="hint">
-                            Storyboard: extend to full starting lineup
-                            per sport rules.
-                        </p>
-
-                    </div>
-
-                    <!-- Bench -->
-                    <div class="lineup-panel lineup-panel--bench">
-
-                        <h4>Bench ? FSKM</h4>
-
-                        <div class="player-chip">
-                            Hakim <span>#14</span>
-                        </div>
-
-                        <div class="player-chip">
-                            Syafiq <span>#22</span>
-                        </div>
-
-                        <div class="player-chip">
-                            Luqman <span>#18</span>
-                        </div>
-
-                        <p class="hint">
-                            Drag-to-substitute or pick from bench
-                            in the live match UI.
-                        </p>
-
-                    </div>
-
+                <div class="form-group">
+                    <label><%= match.getTeam2() != null ? match.getTeam2().getTeamName() : "Team 2" %> Score</label>
+                    <input type="number" name="score2" value="<%= match.getScore2() %>" min="0" required>
                 </div>
-
-                <p class="hint hint--gold" style="margin-top:20px">
-
-                    <strong>Badminton / tennis:</strong>
-                    no bench ? show only the two (or four for doubles)
-                    active names and match points.
-                    Injury still logged for medical
-                    and eligibility records.
-
-                </p>
-
-                <!-- Injury Timeline -->
-                <h3 style="margin-top:28px">
-                    Injury log (this match)
-                </h3>
-
-                <ul class="timeline">
-                    <li>
-                        34? Injury ? Daniel (ankle);
-                        assessed, continued
-                    </li>
-                </ul>
-
-                <!-- Match Timeline -->
-                <h3 style="margin-top:24px">
-                    Event timeline
-                </h3>
-
-                <ul class="timeline">
-                    <li>12? Goal ? Ahmad</li>
-                    <li>26? Yellow card ? Daniel</li>
-                    <li>40? Substitution ? Hakim on for Luqman</li>
-                    <li>77? Goal ? Faris</li>
-                </ul>
-
-            </div>
-
-        </section>
-
-    </main>
-
+                <div class="form-group" style="min-width:160px;">
+                    <label>Status</label>
+                    <select name="status">
+                        <option value="SCHEDULED" <%= "SCHEDULED".equals(match.getStatus()) ? "selected" : "" %>>SCHEDULED</option>
+                        <option value="COMPLETED" <%= "COMPLETED".equals(match.getStatus()) ? "selected" : "" %>>COMPLETED</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn--primary">Save Update</button>
+            </form>
+        </li>
+        <% } %>
+        <% } } else { %>
+            <li class="matches-list-empty empty-state">No matches match your current filters.</li>
+        <% } %>
+    </ul>
+</section>
+</main>
 </body>
-
 </html>

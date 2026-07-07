@@ -1,7 +1,7 @@
 /* ============================================================
    LIGA-KAMPUS — globalStyle.css
    Contains: body, layout, cards, buttons, forms, badges,
-             utilities — shared across ALL pages
+             tables, pills, utilities — shared across ALL pages
    ============================================================ */
 
 /* ── 1. Base & Body ────────────────────────────────────────── */
@@ -10,7 +10,7 @@ html {
 }
 
 body {
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: var(--font-body);
     background: var(--bg);
     background-attachment: fixed;
     color: var(--text);
@@ -24,35 +24,64 @@ body {
 .main-content {
     margin-left: var(--sidebar-w);
     width: 100%;
-    padding: 36px 40px 60px;
+    padding: 32px 40px 60px;
     min-height: 100vh;
     transition: margin-left var(--transition);
 }
 
 /* ── 3. Section ────────────────────────────────────────────── */
 .section {
-    margin-bottom: 56px;
+    margin-bottom: 52px;
     scroll-margin-top: 24px;
     animation: fadeUp 0.4s ease both;
 }
 
 .section h2 {
-    margin-bottom: 20px;
-    font-size: 1.35rem;
+    margin-bottom: 6px;
+    font-family: var(--font-display);
+    font-size: 1.7rem;
     color: var(--navy);
     font-weight: 700;
+    letter-spacing: -0.01em;
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.section h2::after {
-    content: "";
-    flex: 1;
-    height: 2px;
-    max-width: 120px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, var(--gold), transparent);
+.section-lead {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 22px;
+    max-width: 640px;
+}
+
+/* Generic page header used on admin-style pages */
+.page-header.simple {
+    position: static;
+    background: none;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin-bottom: 28px;
+    display: block;
+    min-height: 0;
+}
+
+.page-header.simple h1 {
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+}
+
+.page-header.simple p {
+    font-size: 14px;
+    color: var(--muted);
+    max-width: 580px;
+    line-height: 1.55;
 }
 
 /* ── 4. Cards ──────────────────────────────────────────────── */
@@ -60,7 +89,7 @@ body {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 22px 24px;
+    padding: 24px 26px;
     box-shadow: var(--shadow);
     transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
@@ -71,19 +100,20 @@ body {
 }
 
 .card h3 {
-    margin-bottom: 14px;
-    font-size: 1rem;
+    margin-bottom: 16px;
+    font-size: 1.02rem;
     font-weight: 700;
     color: var(--navy);
+    letter-spacing: -0.005em;
 }
 
 .card h4 {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.07em;
     color: var(--purple);
     margin-bottom: 10px;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .card p,
@@ -91,13 +121,13 @@ body {
     color: var(--muted);
     margin-bottom: 8px;
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.55;
 }
 
 /* Card variants */
-.card--accent-top  { border-top: 4px solid var(--gold); }
+.card--accent-top  { border-top: 4px solid var(--gold); border-radius: 6px 6px var(--radius) var(--radius); }
 .card--purple      { border-left: 4px solid var(--purple-bright); }
-.card--tinted      { background: rgba(19, 42, 74, 0.045); border-color: rgba(19, 42, 74, 0.1); }
+.card--tinted      { background: rgba(19, 42, 74, 0.035); border-color: rgba(19, 42, 74, 0.09); }
 .card--tinted:hover { border-color: rgba(124, 58, 237, 0.25); }
 .large             { width: 100%; }
 
@@ -114,11 +144,11 @@ body {
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 10px 18px;
+    padding: 11px 20px;
     border: none;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-pill);
     cursor: pointer;
-    transition: filter var(--transition), transform var(--transition), background var(--transition);
+    transition: filter var(--transition), transform var(--transition), background var(--transition), box-shadow var(--transition);
     font-size: 13px;
     font-weight: 600;
     font-family: inherit;
@@ -131,7 +161,7 @@ body {
     color: var(--white);
     box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35);
 }
-.btn--primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.btn--primary:hover { filter: brightness(1.08); transform: translateY(-1px); box-shadow: 0 8px 22px rgba(124, 58, 237, 0.4); }
 
 .btn--secondary { background: var(--navy-soft); color: var(--white); }
 .btn--secondary:hover { background: var(--navy-mid); }
@@ -140,8 +170,9 @@ body {
     background: linear-gradient(135deg, var(--gold) 0%, #e6ac00 100%);
     color: var(--navy);
     font-weight: 700;
+    box-shadow: 0 4px 14px rgba(245, 197, 24, 0.35);
 }
-.btn--gold:hover { filter: brightness(1.06); }
+.btn--gold:hover { filter: brightness(1.06); transform: translateY(-1px); }
 
 .btn--ghost {
     background: transparent;
@@ -153,13 +184,14 @@ body {
 .btn--danger {
     background: transparent;
     color: #c53030;
-    border: 1px solid rgba(197, 48, 48, 0.35);
+    border: 1px solid rgba(197, 48, 48, 0.3);
 }
 .btn--danger:hover { background: rgba(197, 48, 48, 0.08); }
 
-.btn--sm  { padding: 6px 12px; font-size: 12px; }
-.btn--lg  { padding: 14px 26px; font-size: 15px; }
+.btn--sm  { padding: 7px 14px; font-size: 12px; }
+.btn--lg  { padding: 15px 28px; font-size: 15px; }
 .btn--full { width: 100%; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
 
 .button-group {
     display: flex;
@@ -173,9 +205,9 @@ input,
 select,
 textarea {
     width: 100%;
-    padding: 11px 14px;
+    padding: 12px 15px;
     margin-bottom: 10px;
-    border: 1px solid var(--border-strong);
+    border: 1.5px solid var(--border-strong);
     border-radius: var(--radius-sm);
     background: var(--cream);
     font-size: 14px;
@@ -190,37 +222,169 @@ textarea:focus {
     outline: none;
     border-color: var(--purple-bright);
     background: var(--white);
-    box-shadow: 0 0 0 3px var(--purple-soft);
+    box-shadow: 0 0 0 4px var(--purple-soft);
 }
+
+input::placeholder { color: #9ba3b4; }
 
 label {
     display: block;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--muted);
-    margin-bottom: 4px;
+    margin-bottom: 5px;
     margin-top: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
 }
 
 label:first-of-type { margin-top: 0; }
 
-/* ── 7. Badges ─────────────────────────────────────────────── */
-.badge {
-    display: inline-block;
+.form-group { margin-bottom: 6px; }
+
+.two-column-layout {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+.two-column-layout > .form-group { flex: 1; min-width: 220px; }
+
+/* Shared filter-field pattern used on toolbars across dashboard,
+   matches, league, and player-management pages */
+.dashboard-toolbar__field { display: flex; flex-direction: column; gap: 6px; min-width: 220px; flex: 1; }
+
+.dashboard-toolbar__field label,
+.dashboard-toolbar__label {
     font-size: 11px;
     font-weight: 700;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-    padding: 4px 8px;
-    border-radius: 6px;
+    color: var(--muted-light);
+    margin-bottom: 0;
+}
+
+.dashboard-toolbar__field select,
+.dashboard-toolbar__field input { margin-bottom: 0; }
+
+/* ── 7. Badges & Pills ─────────────────────────────────────── */
+.badge {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.045em;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
     background: var(--purple-soft);
     color: var(--purple);
 }
 
-.badge--gold { background: var(--gold-soft); color: var(--navy-soft); }
-.badge--navy { background: rgba(10,22,40,0.1); color: var(--navy); }
+.badge--gold    { background: var(--gold-soft); color: #7a5e00; }
+.badge--navy    { background: rgba(10,22,40,0.08); color: var(--navy); }
+.badge--success { background: rgba(16, 185, 129, 0.14); color: #047857; }
 
-/* ── 8. Utilities ──────────────────────────────────────────── */
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 11px;
+    border-radius: var(--radius-pill);
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: #f3f4f6;
+    color: #6b7280;
+}
+.status-pill::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.7;
+}
+.status-pill--live { background: #fef2f2; color: #dc2626; }
+.status-pill--done { background: rgba(16, 185, 129, 0.12); color: #047857; }
+
+/* ── 8. Tables ─────────────────────────────────────────────── */
+.table-scroll {
+    overflow-x: auto;
+    margin: 0 -4px;
+    padding: 0 4px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.data-table {
+    width: 100%;
+    min-width: 480px;
+    border-collapse: collapse;
+    font-size: 13.5px;
+}
+
+.data-table thead th {
+    text-align: left;
+    padding: 11px 14px;
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted-light);
+    background: rgba(19, 42, 74, 0.03);
+    border-bottom: 2px solid var(--border-strong);
+}
+
+.data-table thead th:first-child { border-radius: var(--radius-sm) 0 0 0; }
+.data-table thead th:last-child  { border-radius: 0 var(--radius-sm) 0 0; }
+
+.data-table tbody td {
+    padding: 13px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    vertical-align: middle;
+}
+
+.data-table tbody tr:last-child td { border-bottom: none; }
+.data-table tbody tr:hover td { background: rgba(124, 58, 237, 0.035); }
+.data-table tbody td:nth-child(2) { color: var(--navy); font-weight: 500; }
+
+.data-table--compact th,
+.data-table--compact td { padding: 9px 10px; font-size: 12.5px; }
+.data-table--compact th { font-size: 10px; }
+
+.league-table__row--top td { background: rgba(245, 197, 24, 0.09); }
+.league-table__row--top td:first-child { font-weight: 800; color: var(--gold); position: relative; }
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 28px 12px;
+    color: var(--muted-light);
+    font-size: 13px;
+    font-style: italic;
+}
+
+/* ── 9. Alerts ─────────────────────────────────────────────── */
+.alert-box {
+    padding: 13px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.alert-danger  { background: rgba(197, 48, 48, 0.08); color: #c53030; border: 1px solid rgba(197, 48, 48, 0.2); }
+.alert-success { background: rgba(16, 185, 129, 0.1); color: #047857; border: 1px solid rgba(16, 185, 129, 0.25); }
+
+/* ── 10. Utilities ─────────────────────────────────────────── */
 .hint {
     font-size: 12px;
     color: var(--muted-light);
@@ -236,13 +400,6 @@ label:first-of-type { margin-top: 0; }
     color: var(--navy-soft);
 }
 
-.table-scroll {
-    overflow-x: auto;
-    margin: 0 -4px;
-    padding: 0 4px;
-    -webkit-overflow-scrolling: touch;
-}
-
 .visually-hidden {
     position: absolute;
     width: 1px; height: 1px;
@@ -253,7 +410,11 @@ label:first-of-type { margin-top: 0; }
     border: 0;
 }
 
-/* ── 9. Topbar (search variant — optional) ─────────────────── */
+.font-bold  { font-weight: 700; }
+.text-muted { color: var(--muted-light); }
+.text-center { text-align: center; }
+
+/* ── 11. Topbar (search variant — optional) ─────────────────── */
 .topbar {
     display: flex;
     justify-content: space-between;
@@ -276,13 +437,13 @@ label:first-of-type { margin-top: 0; }
 
 .top-actions { display: flex; gap: 10px; }
 
-/* ── 10. Page entry animation ──────────────────────────────── */
+/* ── 12. Page entry animation ──────────────────────────────── */
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(16px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── 11. Responsive ────────────────────────────────────────── */
+/* ── 13. Responsive ────────────────────────────────────────── */
 @media (max-width: 900px) {
     .main-content {
         margin-left: 0;
@@ -300,6 +461,6 @@ label:first-of-type { margin-top: 0; }
 }
 
 @media (max-width: 640px) {
-    .section h2 { font-size: 1.15rem; }
-    .card { padding: 16px 18px; }
+    .section h2 { font-size: 1.35rem; }
+    .card { padding: 18px 18px; }
 }

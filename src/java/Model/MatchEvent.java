@@ -1,38 +1,33 @@
 package Model;
 
 public class MatchEvent {
-
-    // Attributes
-    private String eventId;     // PK
-    private Match  match;       // FK1 - MATCH_ID
-    private Player player;      // FK2 - PLAYER_ID
-    private Team   team;        // FK3 - TEAM_ID
+    private int eventId;
+    private Match match;        // FK1 MATCH_ID
+    private Player player;      // FK2 PLAYER_ID
+    private Team team;          // FK3 TEAM_ID
     private String eventType;   // e.g. "GOAL", "YELLOW_CARD", "RED_CARD"
-    private int    eventMinute; // EVENT_MINUTE
-    private String time;        // TIME
+    private int eventMinute;
+    private String time;
 
-    // Default Constructor
     public MatchEvent() {
     }
 
-    // Parameterized Constructor
-    public MatchEvent(String eventId, Match match, Player player, Team team,
-                      String eventType, int eventMinute, String time) {
-        this.eventId     = eventId;
-        this.match       = match;
-        this.player      = player;
-        this.team        = team;
-        this.eventType   = eventType;
+    public MatchEvent(int eventId, Match match, Player player, Team team,
+                       String eventType, int eventMinute, String time) {
+        this.eventId = eventId;
+        this.match = match;
+        this.player = player;
+        this.team = team;
+        this.eventType = eventType;
         this.eventMinute = eventMinute;
-        this.time        = time;
+        this.time = time;
     }
 
-    // Getters and Setters
-    public String getEventId() {
+    public int getEventId() {
         return eventId;
     }
 
-    public void setEventId(String eventId) {
+    public void setEventId(int eventId) {
         this.eventId = eventId;
     }
 
@@ -83,5 +78,4 @@ public class MatchEvent {
     public void setTime(String time) {
         this.time = time;
     }
-
 }

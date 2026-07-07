@@ -4,31 +4,11 @@ import Model.User;
 import java.sql.*;
 
 public class UserDAO {
-    private final String JDBC_URL = "jdbc:mysql://localhost:3306/liga_kampus_db";
-    private final String JDBC_USER = "root";
-    private final String JDBC_PASS = "";
-
-    public Connection getConnection() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            return DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASS);
-        } catch (ClassNotFoundException e) {
-            System.out.println("MySQL Driver not found!");
-            e.printStackTrace();
-        } catch (SQLException e) {
-            System.out.println("Database connection failed!");
-            System.out.println("Error Code: " + e.getErrorCode());
-            System.out.println("SQL State: " + e.getSQLState());
-            System.out.println("Message: " + e.getMessage());
-        }
-        return null;
-    }
 
     public void insertUser(User user) {
-        String sql = "INSERT INTO `user` (FULL_NAME, EMAIL, PASSWORD, ROLE, FACULTY) " +
-                     "VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO `users` (FULL_NAME, EMAIL, PASSWORD, ROLE, FACULTY) VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection conn = getConnection()) {
+        try (Connection conn = DBConnection.getConnection()) {
             if (conn == null) { System.out.println("No connection"); return; }
 
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -46,9 +26,9 @@ public class UserDAO {
     }
 
     public User selectUserByEmail(String email) {
-        String sql = "SELECT * FROM `user` WHERE EMAIL = ?";
+        String sql = "SELECT * FROM `users` WHERE EMAIL = ?";
 
-        try (Connection conn = getConnection()) {
+        try (Connection conn = DBConnection.getConnection()) {
             if (conn == null) { System.out.println("No connection"); return null; }
 
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -56,27 +36,20 @@ public class UserDAO {
 
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
-                        User user = new User();
-                        user.setUserId(rs.getInt("USER_ID"));
-                        user.setFullName(rs.getString("FULL_NAME"));
-                        user.setEmail(rs.getString("EMAIL"));
-                        user.setRole(rs.getString("ROLE"));
-                        user.setFaculty(rs.getString("FACULTY"));
-                        return user;
+                        return mapRow(rs);
                     }
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException("Failed to retrieve user: " + e.getMessage(), e);
         }
-
         return null;
     }
 
     public User selectUserByEmailAndPassword(String email, String password) {
-        String sql = "SELECT * FROM `user` WHERE EMAIL = ? AND PASSWORD = ?";
+        String sql = "SELECT * FROM `users` WHERE EMAIL = ? AND PASSWORD = ?";
 
-        try (Connection conn = getConnection()) {
+        try (Connection conn = DBConnection.getConnection()) {
             if (conn == null) { System.out.println("No connection"); return null; }
 
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -85,20 +58,23 @@ public class UserDAO {
 
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
-                        User user = new User();
-                        user.setUserId(rs.getInt("USER_ID"));
-                        user.setFullName(rs.getString("FULL_NAME"));
-                        user.setEmail(rs.getString("EMAIL"));
-                        user.setRole(rs.getString("ROLE"));
-                        user.setFaculty(rs.getString("FACULTY"));
-                        return user;
+                        return mapRow(rs);
                     }
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException("Failed to retrieve user: " + e.getMessage(), e);
         }
-
         return null;
+    }
+
+    private User mapRow(ResultSet rs) throws SQLException {
+        User user = new User();
+        user.setUserId(rs.getInt("USER_ID"));
+        user.setFullName(rs.getString("FULL_NAME"));
+        user.setEmail(rs.getString("EMAIL"));
+        user.setRole(rs.getString("ROLE"));
+        user.setFaculty(rs.getString("FACULTY"));
+        return user;
     }
 }

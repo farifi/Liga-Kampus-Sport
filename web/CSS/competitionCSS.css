@@ -1,23 +1,20 @@
 /* ── competitionCSS.css ──────────────────────────────────────────────────── */
 
-.management-container {
-    padding: 2rem;
-}
-
 .management-card {
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    padding: 1.5rem;
-    border: 1px solid #e0e0e0;
-    overflow: hidden;          /* clips anything that bleeds outside the card */
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 26px;
+    border: 1px solid var(--border);
+    overflow: hidden;
 }
 
 .management-header h2 {
-    font-size: 1.25rem;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
-    color: #1a1a1a;
+    margin-bottom: 20px;
+    color: var(--navy);
 }
 
 /* ── Table wrapper ───────────────────────────────────────────────────────── */
@@ -31,93 +28,85 @@
     width: 100%;
     min-width: 640px;
     border-collapse: collapse;
-    table-layout: fixed;       /* forces columns to share width evenly */
+    table-layout: fixed;
 }
 
-/* Column width distribution */
-.management-table th:nth-child(1) { width: 14%; }  /* Match ID */
-.management-table th:nth-child(2) { width: 28%; }  /* Fixture */
-.management-table th:nth-child(3) { width: 10%; }  /* Score */
-.management-table th:nth-child(4) { width: 20%; }  /* Venue & Date */
-.management-table th:nth-child(5) { width: 28%; }  /* Actions */
+.management-table th:nth-child(1) { width: 12%; }
+.management-table th:nth-child(2) { width: 30%; }
+.management-table th:nth-child(3) { width: 16%; }
+.management-table th:nth-child(4) { width: 16%; }
+.management-table th:nth-child(5) { width: 12%; }
+.management-table th:nth-child(6) { width: 14%; }
 
-.management-table thead {
-    border-bottom: 2px solid #e9ecef;
-}
+.management-table thead { border-bottom: 2px solid var(--border-strong); }
 
 .management-table th {
     text-align: left;
-    font-size: 0.72rem;
+    font-size: 10.5px;
     letter-spacing: 0.06em;
-    color: #6c757d;
-    font-weight: 600;
-    padding: 10px 14px;
+    color: var(--muted-light);
+    font-weight: 700;
+    padding: 11px 14px;
     text-transform: uppercase;
     white-space: nowrap;
-    background: #fafafa;
+    background: rgba(19, 42, 74, 0.03);
 }
 
 .management-table td {
-    padding: 14px 14px;
-    font-size: 0.88rem;
-    color: #333;
+    padding: 14px;
+    font-size: 13.5px;
+    color: var(--muted);
     vertical-align: middle;
-    border-bottom: 1px solid #f0f0f0;
-    overflow: hidden;          /* prevents any cell from bleeding out */
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
 }
 
-.management-table tbody tr:last-child td {
-    border-bottom: none;
-}
-
-.management-table tbody tr:hover td {
-    background: #faf8ff;
-}
+.management-table tbody tr:last-child td { border-bottom: none; }
+.management-table tbody tr:hover td { background: rgba(124, 58, 237, 0.035); }
 
 /* ── Action buttons cell ─────────────────────────────────────────────────── */
 .action-buttons {
     display: flex;
     align-items: center;
     gap: 8px;
-    flex-wrap: wrap;           /* wraps to next line instead of overflowing */
+    flex-wrap: wrap;
 }
 
 /* ── Edit / Set Score ────────────────────────────────────────────────────── */
 .btn-edit {
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.82rem;
-    font-weight: 500;
+    padding: 7px 16px;
+    border-radius: var(--radius-pill);
+    font-size: 12.5px;
+    font-weight: 600;
     cursor: pointer;
     transition: background 0.18s, color 0.18s;
-    background: #f3f0ff;
-    color: #7950f2;
-    border: 1px solid #dcd3ff;
+    background: var(--purple-soft);
+    color: var(--purple-bright);
+    border: 1px solid rgba(124, 58, 237, 0.25);
     white-space: nowrap;
-    line-height: 1.4;
     flex-shrink: 0;
 }
 
 .btn-edit:hover {
-    background: #7950f2;
+    background: var(--purple-bright);
     color: #fff;
-    border-color: #7950f2;
+    border-color: var(--purple-bright);
 }
 
 /* ── Void / Remove ───────────────────────────────────────────────────────── */
 .btn-withdraw {
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.82rem;
-    font-weight: 500;
+    padding: 7px 16px;
+    border-radius: var(--radius-pill);
+    font-size: 12.5px;
+    font-weight: 600;
     cursor: pointer;
     transition: background 0.18s, color 0.18s;
     background: #fff5f5;
     color: #c92a2a;
     border: 1px solid #ffc9c9;
     white-space: nowrap;
-    line-height: 1.4;
     flex-shrink: 0;
+    font-family: inherit;
 }
 
 .btn-withdraw:hover {
@@ -127,5 +116,5 @@
 }
 
 /* ── Utilities ───────────────────────────────────────────────────────────── */
-.font-bold  { font-weight: 600; }
-.text-muted { color: #adb5bd; }
+.font-bold  { font-weight: 700; }
+.text-muted { color: var(--muted-light); }

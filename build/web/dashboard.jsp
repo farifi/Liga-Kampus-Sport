@@ -1,291 +1,150 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="Model.Sport" %>
+<%@ page import="Model.Competition" %>
+<%@ page import="Model.Match" %>
+<%@ page import="Model.TeamStatistic" %>
+<%@ page import="Util.PointsCalculator" %>
+<%
+    List<Sport> sports = (List<Sport>) request.getAttribute("sports");
+    if (sports == null) { response.sendRedirect(request.getContextPath() + "/dashboard"); return; }
+
+    List<Competition> competitions = (List<Competition>) request.getAttribute("competitions");
+    if (competitions == null) { competitions = java.util.Collections.emptyList(); }
+
+    Competition selectedCompetition = (Competition) request.getAttribute("selectedCompetition");
+
+    List<Match> matches = (List<Match>) request.getAttribute("matches");
+    if (matches == null) { matches = java.util.Collections.emptyList(); }
+
+    List<TeamStatistic> standings = (List<TeamStatistic>) request.getAttribute("standings");
+    if (standings == null) { standings = java.util.Collections.emptyList(); }
+
+    List<Object[]> topScorers = (List<Object[]>) request.getAttribute("topScorers");
+    if (topScorers == null) { topScorers = java.util.Collections.emptyList(); }
+%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <%@ include file="/common/head.jsp" %>
-    <!-- Dashboard-specific styles -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/dashboardCSS.css">
+    <title>Dashboard - LIGA-KAMPUS</title>
 </head>
-
 <body>
 
-    <%@ include file="/components/navbar.jsp" %>
+<%@ include file="/components/navbar.jsp" %>
 
-    <main class="main-content">
+<main class="main-content">
+<%@ include file="/components/header.jsp" %>
 
-        <%@ include file="/components/header.jsp" %>
+<section id="dashboard" class="section">
+    <h2>Dashboard</h2>
+    <p class="hint section-lead">Live standings, top scorers, and upcoming fixtures at a glance.</p>
 
-        <section id="dashboard" class="section">
-            <h2>Dashboard</h2>
-
-            <div class="dashboard-stack">
-
-                <!-- ?? Toolbar ?????????????????????????????? -->
-                <div class="dashboard-toolbar card card--tinted">
-                    <div class="dashboard-toolbar__row dashboard-toolbar__row--filters">
-
-                        <div class="dashboard-toolbar__field">
-                            <label class="dashboard-toolbar__label" for="dash-sport">Sport</label>
-                            <select id="dash-sport" aria-label="Choose sport">
-                                <option value="football" selected>Football</option>
-                                <option value="basketball">Basketball</option>
-                                <option value="badminton">Badminton</option>
-                                <option value="volleyball">Volleyball</option>
-                                <option value="tennis">Tennis</option>
-                                <option value="futsal">Futsal</option>
-                            </select>
-                        </div>
-
-                        <div class="dashboard-toolbar__field">
-                            <label class="dashboard-toolbar__label" for="dash-competition">Competition</label>
-                            <select id="dash-competition" aria-label="Choose competition">
-                                <option value="liga-premier"         data-sport="football"   selected>Liga Kampus ? Football Premier</option>
-                                <option value="inter-faculty-futsal" data-sport="futsal"             >Inter-Faculty Futsal Cup</option>
-                                <option value="badminton-open"       data-sport="badminton"          >Badminton Open</option>
-                                <option value="basketball-campus"    data-sport="basketball"         >Basketball Campus League</option>
-                                <option value="volleyball-challenge" data-sport="volleyball"         >Volleyball Challenge</option>
-                                <option value="tennis-open"          data-sport="tennis"             >Tennis Open (Campus)</option>
-                            </select>
-                        </div>
-
-                        <button type="button" class="btn btn--primary btn--sm dashboard-toolbar__cta">
-                            + Schedule match
-                        </button>
-                    </div>
-                    <p class="dashboard-toolbar__hint hint">
-                        Sport and competition filter the fixture list and league table below.
-                    </p>
+    <div class="dashboard-stack">
+        <div class="card card--tinted dashboard-toolbar">
+            <form action="${pageContext.request.contextPath}/dashboard" method="GET" class="dashboard-toolbar__row--filters">
+                <div class="dashboard-toolbar__field">
+                    <label class="dashboard-toolbar__label" for="dash-sport">Sport</label>
+                    <select id="dash-sport" name="sportId" onchange="this.form.submit()">
+                        <% for (Sport sport : sports) {
+                            boolean isSelected = selectedCompetition != null && selectedCompetition.getSport() != null
+                                    && selectedCompetition.getSport().getSportId() == sport.getSportId();
+                        %>
+                        <option value="<%= sport.getSportId() %>" <%= isSelected ? "selected" : "" %>><%= sport.getSportName() %></option>
+                        <% } %>
+                    </select>
                 </div>
 
-                <!-- ?? Leagues + Featured Live ????????????? -->
-                <div class="dashboard-columns">
+                <div class="dashboard-toolbar__field">
+                    <label class="dashboard-toolbar__label" for="dash-competition">Competition</label>
+                    <select id="dash-competition" name="competitionId" onchange="this.form.submit()">
+                        <% for (Competition competition : competitions) {
+                            boolean isSelected = selectedCompetition != null && selectedCompetition.getCompetitionId() == competition.getCompetitionId();
+                        %>
+                        <option value="<%= competition.getCompetitionId() %>" <%= isSelected ? "selected" : "" %>><%= competition.getCompetitionName() %></option>
+                        <% } %>
+                    </select>
+                </div>
+            </form>
+            <p class="dashboard-toolbar__hint hint">Select a sport and competition to filter everything below.</p>
+        </div>
 
-                    <!-- Leagues -->
-                    <div class="card card--accent-top card--tinted">
-                        <h3>Leagues</h3>
-                        <ul class="league-list">
+        <div class="dashboard-columns">
+            <div class="card card--accent-top card--tinted">
+                <h3>Inter-Faculty Standings</h3>
+                <table class="data-table data-table--compact">
+                    <thead><tr><th>#</th><th>Team</th><th>Pts</th></tr></thead>
+                    <tbody>
+                        <% if (!standings.isEmpty()) {
+                            int rank = 1;
+                            for (TeamStatistic stat : standings) {
+                                if (rank > 5) break;
+                                String sn = (stat.getTeam() != null && stat.getTeam().getSport() != null) ? stat.getTeam().getSport().getSportName() : null;
+                                int pts = PointsCalculator.calculatePoints(sn, stat.getWins(), stat.getDraws());
+                                String rankClass = rank <= 3 ? "rank-cell rank-cell--" + rank : "rank-cell";
+                        %>
+                        <tr>
+                            <td><span class="<%= rankClass %>"><%= rank %></span></td>
+                            <td><%= stat.getTeam() != null ? stat.getTeam().getTeamName() : "-" %></td>
+                            <td><strong><%= pts %></strong></td>
+                        </tr>
+                        <% rank++; } } else { %>
+                        <tr><td colspan="3" class="empty-state">No standings yet.</td></tr>
+                        <% } %>
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn--sm btn--ghost" style="margin-top:16px"
+                        onclick="window.location.href='${pageContext.request.contextPath}/league'">View Full Table</button>
+            </div>
 
-                            <li class="league-list__item">
-                                <div class="league-list__main">
-                                    <strong>Liga Kampus ? Football Premier</strong>
-                                    <span class="badge">Football</span>
-                                </div>
-                                <div class="league-list__meta">12 teams · League + knockout · Ends 28 Jun</div>
-                                <div class="league-list__foot">
-                                    <span class="league-list__phase">Knockout: R16</span>
-                                    <button type="button" class="btn btn--sm btn--ghost">Open</button>
-                                </div>
-                            </li>
+            <div class="card card--purple card--tinted">
+                <h3>Top Scorers</h3>
+                <table class="data-table data-table--compact">
+                    <thead><tr><th>Player</th><th>Team</th><th>Goals</th></tr></thead>
+                    <tbody>
+                        <% if (!topScorers.isEmpty()) {
+                            for (Object[] row : topScorers) {
+                        %>
+                        <tr><td><%= row[0] %></td><td><%= row[1] %></td><td><strong><%= row[2] %></strong></td></tr>
+                        <% } } else { %>
+                        <tr><td colspan="3" class="empty-state">No goals recorded yet.</td></tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-                            <li class="league-list__item">
-                                <div class="league-list__main">
-                                    <strong>Inter-Faculty Futsal Cup</strong>
-                                    <span class="badge badge--gold">Futsal</span>
-                                </div>
-                                <div class="league-list__meta">8 teams · Group + semis · Ends 12 Jul</div>
-                                <div class="league-list__foot">
-                                    <span class="league-list__phase">Group stage</span>
-                                    <button type="button" class="btn btn--sm btn--ghost">Open</button>
-                                </div>
-                            </li>
+        <div class="card large card--tinted">
+            <h3><%= selectedCompetition != null ? selectedCompetition.getCompetitionName() : "Fixtures" %></h3>
+            <p class="hint" style="margin-bottom:14px">Upcoming and recent matches for this competition.</p>
 
-                            <li class="league-list__item">
-                                <div class="league-list__main">
-                                    <strong>Badminton Open (Singles / Doubles)</strong>
-                                    <span class="badge">Badminton</span>
-                                </div>
-                                <div class="league-list__meta">16 faculties · Swiss + bracket</div>
-                                <div class="league-list__foot">
-                                    <span class="league-list__phase">Quarter-finals</span>
-                                    <button type="button" class="btn btn--sm btn--ghost">Open</button>
-                                </div>
-                            </li>
-
-                            <li class="league-list__item">
-                                <div class="league-list__main">
-                                    <strong>Volleyball Challenge</strong>
-                                    <span class="badge">Volleyball</span>
-                                </div>
-                                <div class="league-list__meta">10 teams · Round robin</div>
-                                <div class="league-list__foot">
-                                    <span class="league-list__phase">Matchday 6</span>
-                                    <button type="button" class="btn btn--sm btn--ghost">Open</button>
-                                </div>
-                            </li>
-
-                        </ul>
+            <ul class="dash-matches-list">
+                <% if (matches.isEmpty()) { %>
+                    <li class="empty-state list-empty">No matches scheduled yet for this selection.</li>
+                <% } else {
+                    for (Match match : matches) {
+                        boolean isCompleted = "COMPLETED".equalsIgnoreCase(match.getStatus());
+                %>
+                <li class="dash-match-card">
+                    <div class="matches-list__when"><%= match.getDate() %> &middot; <%= match.getVenue() %></div>
+                    <div class="matches-list__main">
+                        <span class="matches-list__team"><%= match.getTeam1() != null ? match.getTeam1().getTeamName() : "TBD" %></span>
+                        <span class="matches-list__score">
+                            <% if (isCompleted) { %><%= match.getScore1() %> &ndash; <%= match.getScore2() %><% } else { %>VS<% } %>
+                        </span>
+                        <span class="matches-list__team"><%= match.getTeam2() != null ? match.getTeam2().getTeamName() : "TBD" %></span>
                     </div>
-
-                    <!-- Featured Live -->
-                    <div class="card card--purple card--tinted">
-                        <h3>Featured live</h3>
-                        <p>FSKM vs Engineering · Football knockout</p>
-                        <p class="live-score">2 ? 1</p>
-                        <p>78? · <span class="live-tag">LIVE</span></p>
-                        <p class="hint" style="margin-top:4px">
-                            Pin any match here; full controls are under <strong>Matches</strong>.
-                        </p>
+                    <div class="matches-list__meta">
+                        <span class="status-pill <%= isCompleted ? "status-pill--done" : "status-pill--live" %>"><%= match.getStatus() %></span>
+                        <button type="button" class="btn btn--sm btn--ghost" onclick="window.location.href='${pageContext.request.contextPath}/matches'">Open Match Center</button>
                     </div>
-
-                </div><!-- /.dashboard-columns -->
-
-                <!-- ?? Fixture list ????????????????????????? -->
-                <div class="card large card--tinted dashboard-matches-card">
-                    <h3 class="dashboard-matches-card__title" id="dash-matches-heading">
-                        Liga Kampus ? Football Premier
-                    </h3>
-                    <p class="hint dashboard-matches-card__intro" id="dash-matches-sub">
-                        Fixtures for this competition. Each row shows stage and match number.
-                    </p>
-
-                    <ul class="dash-matches-list" id="dash-matches-list" aria-label="Competition fixtures">
-
-                        <li class="dash-match-card">
-                            <div class="fixture-labels">
-                                <span class="fixture-type fixture-type--knockout">Quarter-final</span>
-                                <span class="fixture-match-no">Match 1</span>
-                            </div>
-                            <div class="dash-match-card__body">
-                                <div class="matches-list__when">14 May · 20:30 · Stadium A</div>
-                                <div class="matches-list__main">
-                                    <span class="matches-list__team">FSKM</span>
-                                    <span class="matches-list__score"><strong>2</strong> ? <strong>1</strong></span>
-                                    <span class="matches-list__team">Engineering</span>
-                                </div>
-                                <div class="matches-list__meta">
-                                    <span class="status-pill status-pill--live">Live</span>
-                                </div>
-                                <button type="button" class="btn btn--sm btn--ghost">Open</button>
-                            </div>
-                        </li>
-
-                        <li class="dash-match-card">
-                            <div class="fixture-labels">
-                                <span class="fixture-type fixture-type--league">League</span>
-                                <span class="fixture-match-no">Match 12</span>
-                            </div>
-                            <div class="dash-match-card__body">
-                                <div class="matches-list__when">18 May · 16:00 · Stadium B</div>
-                                <div class="matches-list__main">
-                                    <span class="matches-list__team">Science</span>
-                                    <span class="matches-list__score">?</span>
-                                    <span class="matches-list__team">Law</span>
-                                </div>
-                                <div class="matches-list__meta">
-                                    <span class="status-pill">Scheduled</span>
-                                </div>
-                                <button type="button" class="btn btn--sm btn--ghost">Open</button>
-                            </div>
-                        </li>
-
-                        <li class="dash-match-card">
-                            <div class="fixture-labels">
-                                <span class="fixture-type fixture-type--league">Group stage</span>
-                                <span class="fixture-match-no">MD 6</span>
-                            </div>
-                            <div class="dash-match-card__body">
-                                <div class="matches-list__when">17 May · 16:00 · Main court</div>
-                                <div class="matches-list__main">
-                                    <span class="matches-list__team">FPA</span>
-                                    <span class="matches-list__score">?</span>
-                                    <span class="matches-list__team">FSSR</span>
-                                </div>
-                                <div class="matches-list__meta">
-                                    <span class="status-pill">Scheduled</span>
-                                </div>
-                                <button type="button" class="btn btn--sm btn--ghost">Open</button>
-                            </div>
-                        </li>
-
-                        <li class="dash-match-card">
-                            <div class="fixture-labels">
-                                <span class="fixture-type fixture-type--knockout">Quarter-final</span>
-                                <span class="fixture-match-no">Match 2</span>
-                            </div>
-                            <div class="dash-match-card__body">
-                                <div class="matches-list__when">19 May · 19:00 · Stadium A</div>
-                                <div class="matches-list__main">
-                                    <span class="matches-list__team">Business</span>
-                                    <span class="matches-list__score">?</span>
-                                    <span class="matches-list__team">Education</span>
-                                </div>
-                                <div class="matches-list__meta">
-                                    <span class="status-pill">Scheduled</span>
-                                </div>
-                                <button type="button" class="btn btn--sm btn--ghost">Open</button>
-                            </div>
-                        </li>
-
-                        <li class="dash-match-card">
-                            <div class="fixture-labels">
-                                <span class="fixture-type fixture-type--cup">Semi-final</span>
-                                <span class="fixture-match-no">Match 19</span>
-                            </div>
-                            <div class="dash-match-card__body">
-                                <div class="matches-list__when">28 May · 21:00 · Stadium A</div>
-                                <div class="matches-list__main">
-                                    <span class="matches-list__team">Winner QF1</span>
-                                    <span class="matches-list__score">?</span>
-                                    <span class="matches-list__team">Winner QF2</span>
-                                </div>
-                                <div class="matches-list__meta">
-                                    <span class="status-pill">TBD</span>
-                                </div>
-                                <button type="button" class="btn btn--sm btn--ghost">Open</button>
-                            </div>
-                        </li>
-
-                    </ul>
-                </div><!-- /.fixture list -->
-
-                <!-- ?? League Table ????????????????????????? -->
-                <div class="card large card--tinted">
-                    <h3>League table · Football Premier</h3>
-                    <p class="hint" style="margin-bottom:14px">
-                        Points table for the selected competition.
-                    </p>
-                    <div class="table-scroll">
-                        <table class="data-table data-table--compact league-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Team</th>
-                                    <th title="Played">P</th>
-                                    <th title="Won">W</th>
-                                    <th title="Drawn">D</th>
-                                    <th title="Lost">L</th>
-                                    <th title="Goals For">GF</th>
-                                    <th title="Goals Against">GA</th>
-                                    <th title="Goal Difference">GD</th>
-                                    <th title="Points">Pts</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="league-table__row league-table__row--top">
-                                    <td>1</td><td><strong>FSKM</strong></td>
-                                    <td>8</td><td>5</td><td>2</td><td>1</td>
-                                    <td>16</td><td>9</td><td>+7</td><td><strong>17</strong></td>
-                                </tr>
-                                <tr class="league-table__row league-table__row--top">
-                                    <td>2</td><td><strong>Engineering</strong></td>
-                                    <td>8</td><td>4</td><td>1</td><td>3</td>
-                                    <td>12</td><td>11</td><td>+1</td><td><strong>13</strong></td>
-                                </tr>
-                                <tr><td>3</td><td>Science</td>     <td>8</td><td>4</td><td>0</td><td>4</td><td>11</td><td>12</td><td>?1</td><td>12</td></tr>
-                                <tr><td>4</td><td>Business</td>    <td>8</td><td>3</td><td>2</td><td>3</td><td>10</td><td>10</td><td>0</td> <td>11</td></tr>
-                                <tr><td>5</td><td>Law</td>         <td>8</td><td>3</td><td>1</td><td>4</td><td>9</td> <td>13</td><td>?4</td><td>10</td></tr>
-                                <tr><td>6</td><td>Education</td>   <td>8</td><td>2</td><td>3</td><td>3</td><td>8</td> <td>11</td><td>?3</td><td>9</td></tr>
-                                <tr><td>7</td><td>FPA</td>         <td>8</td><td>2</td><td>2</td><td>4</td><td>7</td> <td>14</td><td>?7</td><td>8</td></tr>
-                                <tr><td>8</td><td>Architecture</td><td>8</td><td>1</td><td>3</td><td>4</td><td>6</td> <td>15</td><td>?9</td><td>6</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div><!-- /.league table -->
-
-            </div><!-- /.dashboard-stack -->
-        </section>
-
-    </main>
-
+                </li>
+                <% } } %>
+            </ul>
+        </div>
+    </div>
+</section>
+</main>
 </body>
 </html>
