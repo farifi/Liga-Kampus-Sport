@@ -19,9 +19,6 @@
 
     List<TeamStatistic> standings = (List<TeamStatistic>) request.getAttribute("standings");
     if (standings == null) { standings = java.util.Collections.emptyList(); }
-
-    List<Object[]> topScorers = (List<Object[]>) request.getAttribute("topScorers");
-    if (topScorers == null) { topScorers = java.util.Collections.emptyList(); }
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +36,7 @@
 
 <section id="dashboard" class="section">
     <h2>Dashboard</h2>
-    <p class="hint section-lead">Live standings, top scorers, and upcoming fixtures at a glance.</p>
+    <p class="hint section-lead">Live standings and upcoming fixtures at a glance.</p>
 
     <div class="dashboard-stack">
         <div class="card card--tinted dashboard-toolbar">
@@ -70,49 +67,31 @@
             <p class="dashboard-toolbar__hint hint">Select a sport and competition to filter everything below.</p>
         </div>
 
-        <div class="dashboard-columns">
-            <div class="card card--accent-top card--tinted">
-                <h3>Inter-Faculty Standings</h3>
-                <table class="data-table data-table--compact">
-                    <thead><tr><th>#</th><th>Team</th><th>Pts</th></tr></thead>
-                    <tbody>
-                        <% if (!standings.isEmpty()) {
-                            int rank = 1;
-                            for (TeamStatistic stat : standings) {
-                                if (rank > 5) break;
-                                String sn = (stat.getTeam() != null && stat.getTeam().getSport() != null) ? stat.getTeam().getSport().getSportName() : null;
-                                int pts = PointsCalculator.calculatePoints(sn, stat.getWins(), stat.getDraws());
-                                String rankClass = rank <= 3 ? "rank-cell rank-cell--" + rank : "rank-cell";
-                        %>
-                        <tr>
-                            <td><span class="<%= rankClass %>"><%= rank %></span></td>
-                            <td><%= stat.getTeam() != null ? stat.getTeam().getTeamName() : "-" %></td>
-                            <td><strong><%= pts %></strong></td>
-                        </tr>
-                        <% rank++; } } else { %>
-                        <tr><td colspan="3" class="empty-state">No standings yet.</td></tr>
-                        <% } %>
-                    </tbody>
-                </table>
-                <button type="button" class="btn btn--sm btn--ghost" style="margin-top:16px"
-                        onclick="window.location.href='${pageContext.request.contextPath}/league'">View Full Table</button>
-            </div>
-
-            <div class="card card--purple card--tinted">
-                <h3>Top Scorers</h3>
-                <table class="data-table data-table--compact">
-                    <thead><tr><th>Player</th><th>Team</th><th>Goals</th></tr></thead>
-                    <tbody>
-                        <% if (!topScorers.isEmpty()) {
-                            for (Object[] row : topScorers) {
-                        %>
-                        <tr><td><%= row[0] %></td><td><%= row[1] %></td><td><strong><%= row[2] %></strong></td></tr>
-                        <% } } else { %>
-                        <tr><td colspan="3" class="empty-state">No goals recorded yet.</td></tr>
-                        <% } %>
-                    </tbody>
-                </table>
-            </div>
+        <div class="card card--accent-top card--tinted">
+            <h3>Inter-Faculty Standings</h3>
+            <table class="data-table data-table--compact">
+                <thead><tr><th>#</th><th>Team</th><th>Pts</th></tr></thead>
+                <tbody>
+                    <% if (!standings.isEmpty()) {
+                        int rank = 1;
+                        for (TeamStatistic stat : standings) {
+                            if (rank > 5) break;
+                            String sn = (stat.getTeam() != null && stat.getTeam().getSport() != null) ? stat.getTeam().getSport().getSportName() : null;
+                            int pts = PointsCalculator.calculatePoints(sn, stat.getWins(), stat.getDraws());
+                            String rankClass = rank <= 3 ? "rank-cell rank-cell--" + rank : "rank-cell";
+                    %>
+                    <tr>
+                        <td><span class="<%= rankClass %>"><%= rank %></span></td>
+                        <td><%= stat.getTeam() != null ? stat.getTeam().getTeamName() : "-" %></td>
+                        <td><strong><%= pts %></strong></td>
+                    </tr>
+                    <% rank++; } } else { %>
+                    <tr><td colspan="3" class="empty-state">No standings yet.</td></tr>
+                    <% } %>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn--sm btn--ghost" style="margin-top:16px"
+                    onclick="window.location.href='${pageContext.request.contextPath}/league'">View Full Table</button>
         </div>
 
         <div class="card large card--tinted">

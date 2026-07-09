@@ -15,11 +15,16 @@ body {
     min-height: 100vh;
     padding: 28px;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .auth-shell {
     display: flex;
     width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
     min-height: calc(100vh - 56px);
     background: var(--surface, #fff);
     border-radius: 28px;

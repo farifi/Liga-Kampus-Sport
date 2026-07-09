@@ -20,13 +20,15 @@
 
     <div class="page-header__right">
         <% if (loggedIn) { %>
-            <div class="user-pill">
-                <div class="user-pill__avatar"><%= avatar %></div>
-                <div>
-                    <div class="user-pill__name"><%= username %></div>
-                    <div class="user-pill__role"><%= user.getRole() != null ? user.getRole().toLowerCase() : "" %></div>
+            <a href="${pageContext.request.contextPath}/manager/profile" style="text-decoration:none; color:inherit; display:block;">
+                <div class="user-pill" style="cursor:pointer;">
+                    <div class="user-pill__avatar"><%= avatar %></div>
+                    <div>
+                        <div class="user-pill__name"><%= username %></div>
+                        <div class="user-pill__role"><%= user.getRole() != null ? user.getRole().toLowerCase() : "" %></div>
+                    </div>
                 </div>
-            </div>
+            </a>
             <button type="button" class="btn--logout" onclick="window.location.href='${pageContext.request.contextPath}/logout'">Logout</button>
         <% } else { %>
             <button type="button" class="btn btn--ghost" onclick="window.location.href='${pageContext.request.contextPath}/auth.jsp'">Login</button>

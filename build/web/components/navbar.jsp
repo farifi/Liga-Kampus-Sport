@@ -24,8 +24,9 @@
                 <li><a href="${pageContext.request.contextPath}/admin/admin.jsp"><span class="nav-icon">&#128100;</span> Admin Panel</a></li>
                 <li><a href="${pageContext.request.contextPath}/admin/competition"><span class="nav-icon">&#127942;</span> Competitions</a></li>
                 <li><a href="${pageContext.request.contextPath}/admin/team"><span class="nav-icon">&#128101;</span> Teams &amp; Coaches</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/matches"><span class="nav-icon">&#9917;</span> Manage Matches</a></li>
 
-            <% } else if ("MANAGER".equals(role)) { %>
+            <% } else if ("TEAM_MANAGER".equalsIgnoreCase(role) || "MANAGER".equalsIgnoreCase(role)) { %>
                 <li class="nav-section-label">Team Management</li>
                 <li><a href="${pageContext.request.contextPath}/manager/players"><span class="nav-icon">&#127955;</span> Player Management</a></li>
             <% } %>

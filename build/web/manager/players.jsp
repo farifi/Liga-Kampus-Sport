@@ -7,7 +7,7 @@
     User currentUser = (User) session.getAttribute("user");
     String userRole = (String) session.getAttribute("role");
 
-    if (currentUser == null || (!"ADMIN".equals(userRole) && !"MANAGER".equals(userRole))) {
+    if (currentUser == null || (!"ADMIN".equalsIgnoreCase(userRole) && !"MANAGER".equalsIgnoreCase(userRole) && !"TEAM_MANAGER".equalsIgnoreCase(userRole))) {
         response.sendRedirect(request.getContextPath() + "/auth.jsp?error=unauthorized");
         return;
     }
@@ -50,41 +50,15 @@
     </form>
 
     <div class="dashboard-stack">
-        <div class="card card--tinted">
-            <h3>Register New Player</h3>
-            <form action="${pageContext.request.contextPath}/manager/players" method="POST">
-                <input type="hidden" name="action" value="create">
-                <input type="hidden" name="teamId" value="<%= currentTeamId %>">
-
-                <div class="player-form">
-                    <div class="form-group">
-                        <label>Player Name</label>
-                        <input type="text" name="playerName" placeholder="Full name" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Student ID</label>
-                        <input type="text" name="studentId" placeholder="e.g. 2023123456">
-                    </div>
-                    <div class="form-group">
-                        <label>Jersey Number</label>
-                        <input type="number" name="jerseyNo" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Position</label>
-                        <input type="text" name="position" placeholder="e.g. Striker">
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn--primary" <%= currentTeamId == 0 ? "disabled" : "" %>>Add Player</button>
-            </form>
-        </div>
-
         <div class="card large card--tinted sport-block">
             <div class="sport-block__head">
                 <h3><%= currentTeamContext != null ? currentTeamContext.getTeamName() : "Roster" %></h3>
-                <% if (teamRoster != null) { %>
-                <span class="badge"><%= teamRoster.size() %> player<%= teamRoster.size() == 1 ? "" : "s" %></span>
-                <% } %>
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <% if (teamRoster != null) { %>
+                    <span class="badge"><%= teamRoster.size() %> player<%= teamRoster.size() == 1 ? "" : "s" %></span>
+                    <% } %>
+                    <button type="button" class="btn btn--sm btn--primary" onclick="openAddModal()" <%= currentTeamId == 0 ? "disabled" : "" %>>Add Player</button>
+                </div>
             </div>
 
             <div class="table-scroll">
@@ -98,11 +72,12 @@
                         %>
                         <tr>
                             <td><strong><%= player.getPlayerName() %></strong></td>
-                            <td><%= player.getStudentId() %></td>
+                            <td><%= player.getStudentId() != null ? player.getStudentId() : "-" %></td>
                             <td><%= player.getJerseyNo() %></td>
-                            <td><%= player.getPosition() %></td>
-                            <td class="inline-actions">
-                                <form action="${pageContext.request.contextPath}/manager/players" method="POST">
+                            <td><%= player.getPosition() != null && !player.getPosition().isBlank() ? player.getPosition() : "-" %></td>
+                            <td class="inline-actions" style="display:flex; gap:8px;">
+                                <button type="button" class="btn btn--sm btn--ghost" onclick="openEditModal(<%= player.getPlayerId() %>, '<%= player.getPlayerName().replace("'", "\\'") %>', '<%= player.getStudentId() != null ? player.getStudentId().replace("'", "\\'") : "" %>', <%= player.getJerseyNo() %>, '<%= player.getPosition() != null ? player.getPosition().replace("'", "\\'") : "" %>')">Edit</button>
+                                <form action="${pageContext.request.contextPath}/manager/players" method="POST" style="margin:0;">
                                     <input type="hidden" name="action" value="delete">
                                     <input type="hidden" name="teamId" value="<%= currentTeamId %>">
                                     <input type="hidden" name="playerId" value="<%= player.getPlayerId() %>">
@@ -120,5 +95,92 @@
     </div>
 </section>
 </main>
+
+<div id="addModal" class="modal">
+    <div class="modal-content">
+        <button type="button" class="modal-close" onclick="closeAddModal()">&times;</button>
+        <h3>Register New Player</h3>
+        <form action="${pageContext.request.contextPath}/manager/players" method="POST">
+            <input type="hidden" name="action" value="create">
+            <input type="hidden" name="teamId" value="<%= currentTeamId %>">
+            <div class="form-group">
+                <label>Player Name</label>
+                <input type="text" name="playerName" placeholder="Full name" required>
+            </div>
+            <div class="form-group">
+                <label>Student ID</label>
+                <input type="text" name="studentId" placeholder="e.g. 2023123456">
+            </div>
+            <div class="form-group">
+                <label>Jersey Number</label>
+                <input type="number" name="jerseyNo" min="0">
+            </div>
+            <div class="form-group">
+                <label>Position</label>
+                <input type="text" name="position" placeholder="e.g. Striker">
+            </div>
+            <button type="submit" class="btn btn--primary" style="margin-top:16px;">Add Player</button>
+        </form>
+    </div>
+</div>
+
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <button type="button" class="modal-close" onclick="closeEditModal()">&times;</button>
+        <h3>Edit Player Info</h3>
+        <form action="${pageContext.request.contextPath}/manager/players" method="POST">
+            <input type="hidden" name="action" value="update">
+            <input type="hidden" name="teamId" value="<%= currentTeamId %>">
+            <input type="hidden" name="playerId" id="edit-playerId">
+            <div class="form-group">
+                <label>Player Name</label>
+                <input type="text" name="playerName" id="edit-playerName" required>
+            </div>
+            <div class="form-group">
+                <label>Student ID</label>
+                <input type="text" name="studentId" id="edit-studentId">
+            </div>
+            <div class="form-group">
+                <label>Jersey Number</label>
+                <input type="number" name="jerseyNo" id="edit-jerseyNo" min="0">
+            </div>
+            <div class="form-group">
+                <label>Position</label>
+                <input type="text" name="position" id="edit-position">
+            </div>
+            <button type="submit" class="btn btn--primary" style="margin-top:16px;">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openAddModal() {
+        document.getElementById("addModal").classList.add("is-open");
+    }
+    function closeAddModal() {
+        document.getElementById("addModal").classList.remove("is-open");
+    }
+    function openEditModal(id, name, studentId, jersey, pos) {
+        document.getElementById("edit-playerId").value = id;
+        document.getElementById("edit-playerName").value = name;
+        document.getElementById("edit-studentId").value = studentId;
+        document.getElementById("edit-jerseyNo").value = jersey;
+        document.getElementById("edit-position").value = pos;
+        document.getElementById("editModal").classList.add("is-open");
+    }
+    function closeEditModal() {
+        document.getElementById("editModal").classList.remove("is-open");
+    }
+    window.onclick = function(event) {
+        var add = document.getElementById("addModal");
+        var edit = document.getElementById("editModal");
+        if (event.target == add) {
+            closeAddModal();
+        }
+        if (event.target == edit) {
+            closeEditModal();
+        }
+    }
+</script>
 </body>
 </html>
