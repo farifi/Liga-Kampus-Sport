@@ -3,14 +3,23 @@ package Controller;
 import Model.User;
 import DAO.UserDAO;
 import java.io.IOException;
+import java.io.File;
+import java.nio.file.Paths;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 
 @WebServlet(name = "profileServlet", urlPatterns = {"/manager/profile"})
+@MultipartConfig(
+    fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
+    maxFileSize = 1024 * 1024 * 10,      // 10 MB
+    maxRequestSize = 1024 * 1024 * 100   // 100 MB
+)
 public class ProfileServlet extends HttpServlet {
 
     @Override
@@ -43,11 +52,28 @@ public class ProfileServlet extends HttpServlet {
         String fullName = request.getParameter("fullName");
         String faculty = request.getParameter("faculty");
         String password = request.getParameter("password");
+        
+        String profileImage = request.getParameter("existingProfileImage");
+        Part filePart = request.getPart("profileImage");
+        if (filePart != null && filePart.getSize() > 0) {
+            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            if (fileName != null && !fileName.isEmpty()) {
+                String uniqueName = System.currentTimeMillis() + "_" + fileName;
+                String uploadPath = request.getServletContext().getRealPath("") + File.separator + "uploads";
+                File uploadDir = new File(uploadPath);
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdir();
+                }
+                filePart.write(uploadPath + File.separator + uniqueName);
+                profileImage = "uploads/" + uniqueName;
+            }
+        }
 
         if (fullName != null && !fullName.isBlank()) {
             UserDAO userDAO = new UserDAO();
             currentUser.setFullName(fullName);
             currentUser.setFaculty(faculty);
+            currentUser.setProfileImage(profileImage);
 
             boolean updatePassword = password != null && !password.isBlank();
             if (updatePassword) {

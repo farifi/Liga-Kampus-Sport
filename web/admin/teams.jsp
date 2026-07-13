@@ -16,6 +16,7 @@
     List<Team> registeredTeams = (List<Team>) request.getAttribute("teamList");
     List<Sport> sports = (List<Sport>) request.getAttribute("sports");
     List<Competition> competitions = (List<Competition>) request.getAttribute("competitions");
+    List<User> managers = (List<User>) request.getAttribute("managers");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +45,7 @@
             <div class="table-scroll">
                 <table class="data-table">
                     <thead>
-                        <tr><th>#</th><th>Team</th><th>Faculty</th><th>Coach</th><th>Sport</th><th>Actions</th></tr>
+                        <tr><th>#</th><th>Team</th><th>Faculty</th><th>Coach / Manager</th><th>Sport</th><th>Actions</th></tr>
                     </thead>
                     <tbody>
                         <% if (registeredTeams != null && !registeredTeams.isEmpty()) {
@@ -54,10 +55,10 @@
                             <td><%= team.getTeamId() %></td>
                             <td><strong><%= team.getTeamName() %></strong></td>
                             <td><%= team.getFaculty() != null ? team.getFaculty() : "-" %></td>
-                            <td><%= team.getCoachName() != null ? team.getCoachName() : "-" %></td>
+                            <td><%= team.getManager() != null ? team.getManager().getFullName() : "<span class=\"text-muted\">Unassigned</span>" %></td>
                             <td><span class="badge"><%= team.getSport() != null ? team.getSport().getSportName() : "-" %></span></td>
                             <td class="action-buttons" style="display:flex; gap:8px;">
-                                <button type="button" class="btn btn--sm btn--ghost" onclick="openEditModal(<%= team.getTeamId() %>, <%= team.getSport() != null ? team.getSport().getSportId() : 0 %>, <%= team.getCompetition() != null ? team.getCompetition().getCompetitionId() : 0 %>, '<%= team.getTeamName().replace("'", "\\'") %>', '<%= team.getCoachName() != null ? team.getCoachName().replace("'", "\\'") : "" %>', '<%= team.getFaculty() != null ? team.getFaculty().replace("'", "\\'") : "" %>')">Edit</button>
+                                <button type="button" class="btn btn--sm btn--ghost" onclick="openEditModal(<%= team.getTeamId() %>, <%= team.getSport() != null ? team.getSport().getSportId() : 0 %>, <%= team.getCompetition() != null ? team.getCompetition().getCompetitionId() : 0 %>, '<%= team.getTeamName().replace("'", "\\'") %>', '<%= team.getFaculty() != null ? team.getFaculty().replace("'", "\\'") : "" %>', <%= team.getManager() != null ? team.getManager().getUserId() : 0 %>)">Edit</button>
                                 <form action="${pageContext.request.contextPath}/admin/team" method="POST" style="margin:0;">
                                     <input type="hidden" name="action" value="delete">
                                     <input type="hidden" name="teamId" value="<%= team.getTeamId() %>">
@@ -103,13 +104,48 @@
                 <input id="team-name" name="teamName" type="text" placeholder="e.g. FSKM" required>
             </div>
             <div class="form-group">
-                <label for="team-coach">Coach Name</label>
-                <input id="team-coach" name="coachName" type="text" placeholder="e.g. Assoc. Prof. Rahman">
+                <label for="team-manager">Coach / Team Manager</label>
+                <select id="team-manager" name="managerId">
+                    <option value="">-- Unassigned --</option>
+                    <% if (managers != null) { for (User m : managers) { %>
+                    <option value="<%= m.getUserId() %>"><%= m.getFullName() %></option>
+                    <% } } %>
+                </select>
             </div>
             <div class="form-group">
-                <label for="team-faculty">Faculty</label>
-                <input id="team-faculty" name="faculty" type="text" placeholder="e.g. FSKM">
-            </div>
+    <label for="team-faculty">Faculty</label>
+            <select id="team-faculty" name="faculty" class="faculty-select" required>
+                <option value="">-- Select Faculty --</option>
+
+                <option value="FSKM">
+                    FSKM - Faculty of Computer and Mathematical Sciences
+                </option>
+
+                <option value="FBM">
+                    FBM - Faculty of Business and Management
+                </option>
+
+                <option value="FKE">
+                    FKE - Faculty of Electrical Engineering
+                </option>
+
+                <option value="FKM">
+                    FKM - Faculty of Mechanical Engineering
+                </option>
+
+                <option value="FKA">
+                    FKA - Faculty of Civil Engineering
+                </option>
+
+                <option value="FSPU">
+                    FSPU - Faculty of Architecture, Planning and Surveying
+                </option>
+
+                <option value="FSR">
+                    FSR - Faculty of Sports Science and Recreation
+                </option>
+            </select>
+        </div>
             <button type="submit" class="btn btn--primary" style="margin-top:16px;">Save Team</button>
         </form>
     </div>
@@ -143,12 +179,47 @@
                 <input id="edit-team-name" name="teamName" type="text" required>
             </div>
             <div class="form-group">
-                <label for="edit-team-coach">Coach Name</label>
-                <input id="edit-team-coach" name="coachName" type="text">
+                <label for="edit-team-manager">Coach / Team Manager</label>
+                <select id="edit-team-manager" name="managerId">
+                    <option value="">-- Unassigned --</option>
+                    <% if (managers != null) { for (User m : managers) { %>
+                    <option value="<%= m.getUserId() %>"><%= m.getFullName() %></option>
+                    <% } } %>
+                </select>
             </div>
             <div class="form-group">
                 <label for="edit-team-faculty">Faculty</label>
-                <input id="edit-team-faculty" name="faculty" type="text">
+                <select id="edit-team-faculty" name="faculty" class="faculty-select" required>
+                    <option value="">-- Select Faculty --</option>
+
+                    <option value="FSKM">
+                        FSKM - Faculty of Computer and Mathematical Sciences
+                    </option>
+
+                    <option value="FBM">
+                        FBM - Faculty of Business and Management
+                    </option>
+
+                    <option value="FKE">
+                        FKE - Faculty of Electrical Engineering
+                    </option>
+
+                    <option value="FKM">
+                        FKM - Faculty of Mechanical Engineering
+                    </option>
+
+                    <option value="FKA">
+                        FKA - Faculty of Civil Engineering
+                    </option>
+
+                    <option value="FSPU">
+                        FSPU - Faculty of Architecture, Planning and Surveying
+                    </option>
+
+                    <option value="FSR">
+                        FSR - Faculty of Sports Science and Recreation
+                    </option>
+                </select>
             </div>
             <button type="submit" class="btn btn--primary" style="margin-top:16px;">Save Changes</button>
         </form>
@@ -162,13 +233,13 @@
     function closeAddModal() {
         document.getElementById("addModal").classList.remove("is-open");
     }
-    function openEditModal(id, sportId, compId, name, coach, faculty) {
+    function openEditModal(id, sportId, compId, name, faculty, managerId) {
         document.getElementById("edit-teamId").value = id;
         document.getElementById("edit-team-sport").value = sportId;
         document.getElementById("edit-team-competition").value = compId;
         document.getElementById("edit-team-name").value = name;
-        document.getElementById("edit-team-coach").value = coach;
         document.getElementById("edit-team-faculty").value = faculty;
+        document.getElementById("edit-team-manager").value = managerId && managerId != 0 ? managerId : "";
         document.getElementById("editModal").classList.add("is-open");
     }
     function closeEditModal() {

@@ -137,6 +137,7 @@ public class MatchDAO {
         match.setVenue(rs.getString("VENUE"));
         match.setDate(rs.getString("DATE"));
         match.setScore1(rs.getInt("SCORE_1"));
+        match.setScore2(rs.getInt("SCORE_2")); // Fixed: Fetching the missing SCORE_2 column values
         match.setStatus(rs.getString("STATUS"));
         return match;
     }

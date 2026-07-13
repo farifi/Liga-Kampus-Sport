@@ -3,17 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/admin/admin.jsp</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/admin/competitions.jsp</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/auth.jsp</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/dashboard.jsp</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/league.jsp</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/matches.jsp</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/admin/teams.jsp</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/common/head.jsp</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/components/header.jsp</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/components/navbar.jsp</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/manager/players.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/DAO/PlayerDAO.java</file>
         </group>
     </open-files>
 </project-private>

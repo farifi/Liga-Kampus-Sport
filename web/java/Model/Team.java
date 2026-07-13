@@ -7,6 +7,7 @@ public class Team {
     private String teamName;
     private String coachName;
     private String faculty;
+    private User manager;
 
     public int getTeamId() { return teamId; }
     public void setTeamId(int teamId) { this.teamId = teamId; }
@@ -25,4 +26,7 @@ public class Team {
 
     public String getFaculty() { return faculty; }
     public void setFaculty(String faculty) { this.faculty = faculty; }
+
+    public User getManager() { return manager; }
+    public void setManager(User manager) { this.manager = manager; }
 }

@@ -8,6 +8,7 @@ public class Player {
     private String studentId;
     private int jerseyNo;
     private String position;
+    private String playerImage;
 
     public Player() {
     }
@@ -77,5 +78,13 @@ public class Player {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public String getPlayerImage() {
+        return playerImage;
+    }
+
+    public void setPlayerImage(String playerImage) {
+        this.playerImage = playerImage;
     }
 }

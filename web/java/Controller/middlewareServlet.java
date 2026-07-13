@@ -19,6 +19,8 @@ import java.io.IOException;
     "/manager/players.jsp",
     "/admin/team",
     "/admin/competition",
+    "/admin/matches",
+    "/admin/users",
     "/manager/players",
     "/matches.jsp",
     "/dashboard.jsp",
@@ -80,7 +82,9 @@ public class middlewareServlet implements Filter {
             || path.equals("/admin/competition.jsp")
             || path.equals("/admin/team.jsp")
             || path.equals("/admin/competition")
-            || path.equals("/admin/team");
+            || path.equals("/admin/team")
+            || path.equals("/admin/matches")
+            || path.equals("/admin/users");
     }
 
     private boolean isManagerPage(String path) {

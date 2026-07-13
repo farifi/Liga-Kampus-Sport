@@ -8,12 +8,13 @@ public class Player {
     private String studentId;
     private int jerseyNo;
     private String position;
+    private String playerImage;
 
     public Player() {
     }
 
     public Player(int playerId, Team team, Sport sport, String playerName, String studentId,
-                  int jerseyNo, String position) {
+                  int jerseyNo, String position, String playerImage) {
         this.playerId = playerId;
         this.team = team;
         this.sport = sport;
@@ -21,6 +22,7 @@ public class Player {
         this.studentId = studentId;
         this.jerseyNo = jerseyNo;
         this.position = position;
+        this.playerImage = playerImage;
     }
 
     public int getPlayerId() {
@@ -77,5 +79,13 @@ public class Player {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public String getPlayerImage() {
+        return playerImage;
+    }
+
+    public void setPlayerImage(String playerImage) {
+        this.playerImage = playerImage;
     }
 }

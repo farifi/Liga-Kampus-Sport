@@ -109,6 +109,7 @@
         <li id="panel-<%= match.getMatchId() %>" hidden>
             <form action="${pageContext.request.contextPath}/matches" method="POST" class="card card--tinted match-edit-panel">
                 <input type="hidden" name="matchId" value="<%= match.getMatchId() %>">
+                <input type="hidden" name="sportId" value="<%= selectedSportId %>">
                 <div class="form-group">
                     <label><%= match.getTeam1() != null ? match.getTeam1().getTeamName() : "Team 1" %> Score</label>
                     <input type="number" name="score1" value="<%= match.getScore1() %>" min="0" required>

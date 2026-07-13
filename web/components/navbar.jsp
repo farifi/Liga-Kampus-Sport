@@ -25,6 +25,7 @@
                 <li><a href="${pageContext.request.contextPath}/admin/competition"><span class="nav-icon">&#127942;</span> Competitions</a></li>
                 <li><a href="${pageContext.request.contextPath}/admin/team"><span class="nav-icon">&#128101;</span> Teams &amp; Coaches</a></li>
                 <li><a href="${pageContext.request.contextPath}/admin/matches"><span class="nav-icon">&#9917;</span> Manage Matches</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/users"><span class="nav-icon">&#128109;</span> Manage Users</a></li>
 
             <% } else if ("TEAM_MANAGER".equalsIgnoreCase(role) || "MANAGER".equalsIgnoreCase(role)) { %>
                 <li class="nav-section-label">Team Management</li>

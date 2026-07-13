@@ -2,6 +2,8 @@ package DAO;
 
 import Model.User;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
 
@@ -68,6 +70,46 @@ public class UserDAO {
         return null;
     }
 
+    /* =========================================================================
+       ADMIN ACTIONS: READ ALL USERS (For Admin Table view)
+       ========================================================================= */
+    public List<User> selectAllUsers() {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM `users` ORDER BY FULL_NAME ASC";
+
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn == null) return users;
+            try (PreparedStatement ps = conn.prepareStatement(sql);
+                 ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    users.add(mapRow(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to retrieve all users: " + e.getMessage(), e);
+        }
+        return users;
+    }
+
+    // Used to populate the "Team Manager" dropdown when assigning a manager to a team
+    public List<User> selectManagers() {
+    List<User> managers = new ArrayList<>();
+    String sql = "SELECT * FROM `users` WHERE UPPER(ROLE) = 'MANAGER' ORDER BY FULL_NAME ASC";
+
+    try (Connection conn = DBConnection.getConnection()) {
+        if (conn == null) return managers;
+        try (PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                managers.add(mapRow(rs));
+            }
+        }
+    } catch (SQLException e) {
+        throw new RuntimeException("Failed to retrieve managers: " + e.getMessage(), e);
+    }
+    return managers;
+}
+
     private User mapRow(ResultSet rs) throws SQLException {
         User user = new User();
         user.setUserId(rs.getInt("USER_ID"));
@@ -75,31 +117,79 @@ public class UserDAO {
         user.setEmail(rs.getString("EMAIL"));
         user.setRole(rs.getString("ROLE"));
         user.setFaculty(rs.getString("FACULTY"));
+        user.setProfileImage(rs.getString("PROFILE_IMAGE")); // Safely map profile images across all queries
         return user;
     }
 
+    /* =========================================================================
+       USER SELF-SERVICE: PROFILE EDIT ENTRIES
+       ========================================================================= */
     public void updateUser(User user, boolean updatePassword) {
         String sql;
         if (updatePassword) {
-            sql = "UPDATE users SET FULL_NAME = ?, FACULTY = ?, PASSWORD = ? WHERE USER_ID = ?";
+            sql = "UPDATE users SET FULL_NAME = ?, FACULTY = ?, PROFILE_IMAGE = ?, PASSWORD = ? WHERE USER_ID = ?";
         } else {
-            sql = "UPDATE users SET FULL_NAME = ?, FACULTY = ? WHERE USER_ID = ?";
+            sql = "UPDATE users SET FULL_NAME = ?, FACULTY = ?, PROFILE_IMAGE = ? WHERE USER_ID = ?";
         }
         try (Connection conn = DBConnection.getConnection()) {
             if (conn == null) return;
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setString(1, user.getFullName());
                 ps.setString(2, user.getFaculty());
+                ps.setString(3, user.getProfileImage());
                 if (updatePassword) {
-                    ps.setString(3, user.getPassword());
-                    ps.setInt(4, user.getUserId());
+                    ps.setString(4, user.getPassword());
+                    ps.setInt(5, user.getUserId());
                 } else {
-                    ps.setInt(3, user.getUserId());
+                    ps.setInt(4, user.getUserId());
                 }
                 ps.executeUpdate();
             }
         } catch (SQLException e) {
             throw new RuntimeException("Failed to update user profile: " + e.getMessage(), e);
+        }
+    }
+
+    /* =========================================================================
+       ADMIN ACTIONS: MODERATION & ACCOUNT REMOVALS
+       ========================================================================= */
+    public void adminUpdateUser(User user, boolean updatePassword) {
+        String sql;
+        if (updatePassword) {
+            sql = "UPDATE users SET FULL_NAME = ?, EMAIL = ?, ROLE = ?, FACULTY = ?, PASSWORD = ? WHERE USER_ID = ?";
+        } else {
+            sql = "UPDATE users SET FULL_NAME = ?, EMAIL = ?, ROLE = ?, FACULTY = ? WHERE USER_ID = ?";
+        }
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn == null) return;
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, user.getFullName());
+                ps.setString(2, user.getEmail());
+                ps.setString(3, user.getRole());
+                ps.setString(4, user.getFaculty());
+                if (updatePassword) {
+                    ps.setString(5, user.getPassword());
+                    ps.setInt(6, user.getUserId());
+                } else {
+                    ps.setInt(5, user.getUserId());
+                }
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to admin update user: " + e.getMessage(), e);
+        }
+    }
+
+    public void deleteUser(int userId) {
+        String sql = "DELETE FROM users WHERE USER_ID = ?";
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn == null) return;
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, userId);
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to delete user: " + e.getMessage(), e);
         }
     }
 }

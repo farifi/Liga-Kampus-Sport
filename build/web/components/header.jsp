@@ -22,7 +22,13 @@
         <% if (loggedIn) { %>
             <a href="${pageContext.request.contextPath}/manager/profile" style="text-decoration:none; color:inherit; display:block;">
                 <div class="user-pill" style="cursor:pointer;">
-                    <div class="user-pill__avatar"><%= avatar %></div>
+                    <div class="user-pill__avatar">
+                        <% if (user.getProfileImage() != null && !user.getProfileImage().isBlank()) { %>
+                            <img src="${pageContext.request.contextPath}/<%= user.getProfileImage() %>" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                        <% } else { %>
+                            <%= avatar %>
+                        <% } %>
+                    </div>
                     <div>
                         <div class="user-pill__name"><%= username %></div>
                         <div class="user-pill__role"><%= user.getRole() != null ? user.getRole().toLowerCase() : "" %></div>

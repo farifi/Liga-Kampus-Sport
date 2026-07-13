@@ -35,7 +35,24 @@
 
     <div class="card card--tinted">
         <h3>Edit Details</h3>
-        <form action="${pageContext.request.contextPath}/manager/profile" method="POST">
+        <form action="${pageContext.request.contextPath}/manager/profile" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="existingProfileImage" value="<%= currentUser.getProfileImage() != null ? currentUser.getProfileImage() : "" %>">
+            
+            <div class="form-group" style="display: flex; flex-direction: column; align-items: center; margin-bottom: 20px;">
+                <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; background: #e2e8f0; border: 2px solid rgba(0,0,0,0.1); margin-bottom: 10px; display: flex; align-items: center; justify-content: center;">
+                    <% if (currentUser.getProfileImage() != null && !currentUser.getProfileImage().isBlank()) { %>
+                        <img src="${pageContext.request.contextPath}/<%= currentUser.getProfileImage() %>" style="width: 100%; height: 100%; object-fit: cover;">
+                    <% } else { %>
+                        <span style="font-size: 36px; color: #718096; font-weight: bold;"><%= currentUser.getFullName().length() >= 2 ? currentUser.getFullName().substring(0, 2).toUpperCase() : "U" %></span>
+                    <% } %>
+                </div>
+                <label style="cursor: pointer; padding: 6px 12px; background: #edf2f7; border-radius: 6px; font-size: 14px; font-weight: 500; color: #4a5568;">
+                    Choose Photo
+                    <input type="file" name="profileImage" accept="image/*" style="display: none;" onchange="this.nextElementSibling.innerText = this.files[0].name">
+                    <span style="display: block; font-size: 11px; color: #a0aec0; margin-top: 4px; font-weight: normal;">No file selected</span>
+                </label>
+            </div>
+
             <div class="form-group">
                 <label>Email Address</label>
                 <input type="email" value="<%= currentUser.getEmail() %>" disabled style="background: rgba(10,22,40,0.04); cursor: not-allowed;">
