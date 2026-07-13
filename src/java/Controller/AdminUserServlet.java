@@ -8,11 +8,24 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "adminUsersServlet", urlPatterns = {"/admin/users"})
 public class AdminUserServlet extends HttpServlet {
+
+    private boolean isAdmin(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        User currentUser = session != null ? (User) session.getAttribute("user") : null;
+        String role = session != null ? (String) session.getAttribute("role") : null;
+        return currentUser != null && ("ADMIN".equalsIgnoreCase(role) || currentUser.isAdmin());
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (!isAdmin(request)) {
+            response.sendRedirect(request.getContextPath() + "/auth.jsp?error=unauthorized");
+            return;
+        }
         UserDAO userDAO = new UserDAO();
         
         // Fetch all registered users for the administration workspace table grid
@@ -24,6 +37,10 @@ public class AdminUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (!isAdmin(request)) {
+            response.sendRedirect(request.getContextPath() + "/auth.jsp?error=unauthorized");
+            return;
+        }
         UserDAO userDAO = new UserDAO();
         String action = request.getParameter("action");
         if ("create".equalsIgnoreCase(action)) {

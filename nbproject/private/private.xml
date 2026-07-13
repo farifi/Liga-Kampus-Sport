@@ -4,6 +4,18 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/DAO/PlayerDAO.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/Model/Team.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/DAO/TeamDAO.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/Controller/PlayerServlet.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/Controller/TeamServlet.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/Model/Player.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/Model/TeamStatistic.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/DAO/UserDAO.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/Controller/ProfileServlet.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/src/java/Controller/AdminUserServlet.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/manager/players.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/admin/teams.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Liga-Kampus-Sport/web/admin/users.jsp</file>
         </group>
     </open-files>
 </project-private>

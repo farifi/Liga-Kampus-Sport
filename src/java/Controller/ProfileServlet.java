@@ -28,7 +28,6 @@ public class ProfileServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         User currentUser = session != null ? (User) session.getAttribute("user") : null;
         String userRole = session != null ? (String) session.getAttribute("role") : null;
-        System.out.println("DEBUG: userRole=" + userRole + " user=" + (currentUser != null ? currentUser.getFullName() : "null"));
         if (currentUser == null || (!"ADMIN".equalsIgnoreCase(userRole) && !"MANAGER".equalsIgnoreCase(userRole) && !"TEAM_MANAGER".equalsIgnoreCase(userRole))) {
             response.sendRedirect(request.getContextPath() + "/auth.jsp?error=unauthorized");
             return;

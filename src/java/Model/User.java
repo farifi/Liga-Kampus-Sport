@@ -46,6 +46,6 @@ public class User {
     public void setProfileImage(String img) { this.profileImage = img; }
 
     public boolean isAdmin()   { return "admin".equalsIgnoreCase(role); }
-    public boolean isManager() { return "manager".equalsIgnoreCase(role); }
-    public boolean isGuest()   { return "guest".equalsIgnoreCase(role); }
+    public boolean isManager() { return "manager".equalsIgnoreCase(role) || "team_manager".equalsIgnoreCase(role); }
+    public boolean isGuest()   { return role == null || role.isBlank() || "guest".equalsIgnoreCase(role); }
 }

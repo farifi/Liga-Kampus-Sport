@@ -11,13 +11,25 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet(name = "competitionServlet", urlPatterns = {"/admin/competition"})
 public class CompetitionServlet extends HttpServlet {
 
+    private boolean isAdmin(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        Model.User currentUser = session != null ? (Model.User) session.getAttribute("user") : null;
+        String role = session != null ? (String) session.getAttribute("role") : null;
+        return currentUser != null && ("ADMIN".equalsIgnoreCase(role) || currentUser.isAdmin());
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (!isAdmin(request)) {
+            response.sendRedirect(request.getContextPath() + "/auth.jsp?error=unauthorized");
+            return;
+        }
         CompetitionDAO competitionDAO = new CompetitionDAO();
         SportDAO sportDAO = new SportDAO();
         List<Competition> competitionList = competitionDAO.selectAllCompetitions();
@@ -30,6 +42,10 @@ public class CompetitionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (!isAdmin(request)) {
+            response.sendRedirect(request.getContextPath() + "/auth.jsp?error=unauthorized");
+            return;
+        }
         CompetitionDAO competitionDAO = new CompetitionDAO();
         String action = request.getParameter("action");
         if ("create".equalsIgnoreCase(action)) {

@@ -91,10 +91,12 @@ public class UserDAO {
         return users;
     }
 
-    // Used to populate the "Team Manager" dropdown when assigning a manager to a team
+    // Used to populate the "Team Manager" dropdown when assigning a manager to a team.
+    // Matches both role spellings in use: admin-created accounts use 'MANAGER',
+    // self-registered accounts (via signup) use 'TEAM_MANAGER'.
     public List<User> selectManagers() {
     List<User> managers = new ArrayList<>();
-    String sql = "SELECT * FROM `users` WHERE UPPER(ROLE) = 'MANAGER' ORDER BY FULL_NAME ASC";
+    String sql = "SELECT * FROM `users` WHERE UPPER(ROLE) IN ('MANAGER', 'TEAM_MANAGER') ORDER BY FULL_NAME ASC";
 
     try (Connection conn = DBConnection.getConnection()) {
         if (conn == null) return managers;

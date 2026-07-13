@@ -16,13 +16,25 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet(name = "adminMatchesServlet", urlPatterns = {"/admin/matches"})
 public class AdminMatchesServlet extends HttpServlet {
 
+    private boolean isAdmin(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        Model.User currentUser = session != null ? (Model.User) session.getAttribute("user") : null;
+        String role = session != null ? (String) session.getAttribute("role") : null;
+        return currentUser != null && ("ADMIN".equalsIgnoreCase(role) || currentUser.isAdmin());
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (!isAdmin(request)) {
+            response.sendRedirect(request.getContextPath() + "/auth.jsp?error=unauthorized");
+            return;
+        }
         MatchDAO matchDAO = new MatchDAO();
         SportDAO sportDAO = new SportDAO();
         CompetitionDAO competitionDAO = new CompetitionDAO();
@@ -44,6 +56,10 @@ public class AdminMatchesServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (!isAdmin(request)) {
+            response.sendRedirect(request.getContextPath() + "/auth.jsp?error=unauthorized");
+            return;
+        }
         MatchDAO matchDAO = new MatchDAO();
         TeamStatisticDAO statDAO = new TeamStatisticDAO();
         String action = request.getParameter("action");

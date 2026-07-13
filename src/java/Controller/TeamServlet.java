@@ -15,13 +15,25 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet(name = "teamServlet", urlPatterns = {"/admin/team"})
 public class TeamServlet extends HttpServlet {
 
+    private boolean isAdmin(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        User currentUser = session != null ? (User) session.getAttribute("user") : null;
+        String role = session != null ? (String) session.getAttribute("role") : null;
+        return currentUser != null && ("ADMIN".equalsIgnoreCase(role) || currentUser.isAdmin());
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (!isAdmin(request)) {
+            response.sendRedirect(request.getContextPath() + "/auth.jsp?error=unauthorized");
+            return;
+        }
         TeamDAO teamDAO = new TeamDAO();
         SportDAO sportDAO = new SportDAO();
         CompetitionDAO competitionDAO = new CompetitionDAO();
@@ -40,6 +52,10 @@ public class TeamServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (!isAdmin(request)) {
+            response.sendRedirect(request.getContextPath() + "/auth.jsp?error=unauthorized");
+            return;
+        }
         TeamDAO teamDAO = new TeamDAO();
         String action = request.getParameter("action");
         if ("create".equalsIgnoreCase(action)) {

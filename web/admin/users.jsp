@@ -127,7 +127,7 @@
                 <label>System Role Mapping</label>
                 <select name="role">
                     <option value="USER">USER</option>
-                    <option value="TEAM_MANAGER">TEAM_MANAGER</option>
+                    <option value="MANAGER">MANAGER</option>
                     <option value="ADMIN">ADMIN</option>
                 </select>
             </div>
@@ -166,6 +166,7 @@
                     <option value="FKA">FKA - Faculty of Civil Engineering</option>
                     <option value="FSPU">FSPU - Faculty of Architecture, Planning and Surveying</option>
                     <option value="FSR">FSR - Faculty of Sports Science and Recreation</option>
+                    <option value="n/a">no faculty</option>
                 </select>
             </div>
 
@@ -173,7 +174,7 @@
                 <label>System Role Mapping</label>
                 <select name="role" id="edit-role">
                     <option value="USER">USER</option>
-                    <option value="TEAM_MANAGER">TEAM_MANAGER</option>
+                    <option value="MANAGER">MANAGER</option>
                     <option value="ADMIN">ADMIN</option>
                 </select>
             </div>
